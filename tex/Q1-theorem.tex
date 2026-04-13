@@ -27,14 +27,13 @@
 
     \begin{itemize}
       \item \textbf{Non-injectivity and fibre structure}~\cite{O18}.
-      The Born--Infeld action $S_{\mathrm{BI}}[\chi]$ is even in~$\chi$
-      (O18, Lemma~2.1), so $\chi$ and $-\chi$ are BI-indiscernible
-      (O18, Corollary~2.4), and every projective fibre contains the
-      parity orbit $\{\chi, -\chi\}$.
-      Under the assumption that parity is the only global effective symmetry of
-      $S_{\mathrm{BI}}$, the minimal fibre is the involution
-      $\Pi(\chi) = \Pi(-\chi)$, concretely realised as
-      $\Pi(c) = \Pi(q-c)$ (O18, Theorem~3.3).
+      The Born--Infeld action is even under the parity involution of admissible
+      configurations (O18, Lemma~2.1): any two configurations related by parity
+      are BI-indiscernible (O18, Corollary~2.4), and every projective fibre
+      contains the corresponding parity orbit.
+      Under the assumption that parity is the only global effective symmetry
+      of the Born--Infeld action, the minimal admissible fibre is the involution
+      $\Pi_n(c) = \Pi_n(q-c)$ (O18, Theorem~3.3).
 
       \item \textbf{Dynamical identity of conjugate blocks}~\cite{O17}.
       The conjugation identity $\rho_{q-c} = \overline{\rho_c}$ together with
@@ -104,10 +103,10 @@
       $\rho_{q-c}(\gamma) = e^{2\pi i (q-c) \gamma / q} = e^{-2\pi i c \gamma / q}
       \cdot \mathrm{Id} = \overline{\rho_c(\gamma)}$,
       so the two blocks differ only by complex conjugation of a global phase.
-      Since $S_{\mathrm{BI}}[\chi]$ depends on~$\chi$ only through
-      $F^2 = (D\chi)^2$ (O18, Lemma~2.1), and complex conjugation of a global
-      phase leaves $F^2$ invariant, no BI-admissible perturbation distinguishes
-      their effective responses.
+      Since the Born--Infeld action depends on the admissible configuration
+      only through the quadratic flux $F^2$ (O18, Lemma~2.1), and complex
+      conjugation of a global phase leaves $F^2$ invariant, no BI-admissible
+      perturbation distinguishes their effective responses.
       The blocks are BI-indiscernible per O18, Definition~2.3.
 
       \textbf{Direction (ii).}
@@ -312,25 +311,25 @@ consistent with Proposition~\ref{prop:bi-admissibility-R}.
       \end{enumerate}
 
     \begin{remark}[Interpretation of the boundary transition]
-      The appearance of $\mathrm{rank}\,W_n^{(c)} = 1$ at full saturation
-      does not contradict structural indistinguishability.
-      At saturation, both $V_n^{(c)}$ and $V_n^{(q-c)}$ reach full rank $q$ in
-      $\mathbb{C}^q$; small numerical deviations from exact equality
-      (at the level of floating-point precision) can then produce a
-      rank-1 residual in $W_n^{(c)}$.
-      This is a finite-precision artefact of the saturated regime,
-      not a physical separation of the two blocks.
-      In the pre-saturation window $[n_0, n_1]$ used throughout the O-series,
-      $\mathrm{rank}\,W_n^{(c)} = 0$ exactly.
+  The appearance of $\mathrm{rank}\,W_n^{(c)} = 1$ at full saturation
+  does not contradict structural indistinguishability.
+  At saturation, both $V_n^{(c)}$ and $V_n^{(q-c)}$ reach full rank $q$ in
+  $\mathbb{C}^q$; small numerical deviations from exact equality
+  (at the level of floating-point precision) can then produce a
+  rank-1 residual in $W_n^{(c)}$.
+  This is a finite-precision artefact of the saturated regime,
+  not a physical separation of the two blocks.
+  In the pre-saturation window $[n_0, n_1]$ used throughout the O-series,
+  $\mathrm{rank}\,W_n^{(c)} = 0$ exactly.
       \end{remark}
 
     \begin{remark}[Connection to rank inflation]
-      By Corollary~\ref{cor:gram-schmidt-rank}, coherence destruction would induce
-      rank inflation in the combined span $V_n^{\mathrm{pair}}$.
-      The numerical result shows that no such inflation occurs in the admissible
-      regime: $\mathcal{R}_n^{(c)} = 0$ throughout $[n_0, n_1]$, confirming
-      that the BI-indiscernibility of conjugate blocks is maintained exactly,
-      not merely approximately.
+  By Corollary~\ref{cor:gram-schmidt-rank}, coherence destruction would induce
+  rank inflation in the combined span $V_n^{\mathrm{pair}}$.
+  The numerical result shows that no such inflation occurs in the admissible
+  regime: $\mathcal{R}_n^{(c)} = 0$ throughout $[n_0, n_1]$, confirming
+  that the BI-indiscernibility of conjugate blocks is maintained exactly,
+  not merely approximately.
       \end{remark}
 
 \subsection{Main theorem}
@@ -593,12 +592,12 @@ consistent with Proposition~\ref{prop:bi-admissibility-R}.
     \end{remark}
 
     \begin{remark}[Classical bound]
-      In the approximately injective regime, the coherent $\mathrm{SU}(2)$
-      amplitude structure is degraded and the fibre multiplicity is suppressed.
-      In this limit, factorizable descriptions are recovered and
-      $|S_{\mathrm{CHSH}}| \leq 2$, consistent with the classical bound.
-      The quantum-to-classical transition corresponds to the restoration of
-      effective injectivity, as discussed in~\cite{Bell}.
+  In the approximately injective regime, the coherent $\mathrm{SU}(2)$
+  amplitude structure is degraded and the fibre multiplicity is suppressed.
+  In this limit, factorizable descriptions are recovered and
+  $|S_{\mathrm{CHSH}}| \leq 2$, consistent with the classical bound.
+  The quantum-to-classical transition corresponds to the restoration of
+  effective injectivity, as discussed in~\cite{Bell}.
     \end{remark}
 
 \subsection{Emergence of the singlet correlator}
