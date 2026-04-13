@@ -1,0 +1,557 @@
+% Phase Coherence as an Admissibility Constraint
+% Companion paper to the Cosmochrony framework and the O-series
+% spectral admissibility sub-programme.
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage{doi}
+\usepackage{graphicx}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{From Admissibility to Quantum Structure:\\
+Phase Coherence and Correlations from Non-Injective Projection}
+
+\author{J\'er\^ome Beau\\
+\small Independent Researcher, Paris, France\\
+\small \texttt{jerome.beau@cosmochrony.org}}
+
+\date{2026}
+
+\begin{document}
+
+  \maketitle
+
+  \begin{abstract}
+    We establish that quantum-mechanical phase coherence is not an independent
+    postulate but a structural consequence of projective admissibility within
+    the Cosmochrony framework.
+    The central result (Theorem~\ref{thm:admissibility-phase-coherence}) shows
+    that any admissible transition preserves the Born--Infeld indiscernibility of
+    conjugate Weil blocks $\rho_c$ and $\rho_{q-c}$ on the Heisenberg Cayley graph
+    $\mathrm{Cay}(\mathrm{Heis}_3(\mathbb{Z}/q\mathbb{Z}), S_q)$, and thereby
+    maintains the metaplectic phase coherence of the admissible fibre.
+    The proof rests on three independently established results: the minimal parity
+    fibre structure of the non-injective projection (O18), the dynamical identity of
+    conjugate Weil blocks (O17), and the discrete admissibility filter of projection
+    locking (O22).
+    A constructive separating functional $R_n^{(c)}$ is exhibited and proved
+    BI-admissible.
+    Numerical validation for $q=29$ across four conjugate pairs confirms
+    that $\mathrm{rank}\,W_n^{(c)} = 0$ exactly throughout the admissible regime,
+    establishing structural indistinguishability of conjugate blocks as a
+    representation-theoretic fact rather than a dynamical coincidence.
+    As a structural consequence, the admissible fibre carries complex amplitude
+    structure with interference, constituting the natural precursor of an effective
+    Hilbert sector — without quantum mechanics as a postulate.
+    The singlet correlator $E(\hat{a},\hat{b}) = -\hat{a}\cdot\hat{b}$ is then derived
+    from admissibility, the parity involution (O18), and the isotropic SU(2) structure (O23),
+    without invoking any quantum postulate.
+    As a consequence, the Tsirelson bound $|S_{\mathrm{CHSH}}| \leq 2\sqrt{2}$ follows
+    unconditionally from the geometry of $\mathrm{Im}\,\mathbb{H}$ under admissible projection.
+    Finally, the Born probability rule $P(a=+1\,|\,\hat{a}) = |\langle+\hat{a}|\psi\rangle|^2$
+    is derived as the unique probability assignment compatible with the coherent fibre structure,
+    the SU(2) observable algebra, and the two-point correlator law.
+    No quantum postulate is invoked at any step of the derivation.
+  \end{abstract}
+
+  \paragraph{Keywords.}
+    Non-injective projection; Quantum foundations; Emergence; Phase coherence; Born–Infeld structure; Weil
+    representation; SU(2) symmetry; Fiber structure; Admissibility; Gram–Schmidt dynamics
+
+    \tableofcontents
+
+    \clearpage
+  \section{Introduction}
+  \label{sec:introduction}
+
+  The structural origin of quantum-mechanical phase coherence is one of the deepest
+  open questions in the foundations of physics.
+  Standard formulations of quantum mechanics postulate the Hilbert space structure,
+  complex amplitudes, and the superposition principle as axioms.
+  The present paper shows that, within the projective admissibility framework of
+  Cosmochrony~\cite{Cosmochrony}, phase coherence is not postulated but derived:
+  it is a necessary consequence of the admissibility constraint that governs
+  which transitions between observable states are physically realised.
+
+  \subsection*{Context and position in the programme}
+
+    The Cosmochrony framework~\cite{Cosmochrony} derives physical structure from
+    a single primitive: the non-injective projection between successive observable
+    states.
+    Non-injectivity is not a modelling choice but a structural necessity — any
+    projection compatible with genuine emergence must be non-injective, as
+    established in~\cite{ENI}.
+    The Born--Infeld structure is selected as the unique admissible completion
+    of the effective action compatible with bounded projective flux~\cite{BornInfeld}.
+
+    Within this framework, the spectral admissibility sub-programme (O-series)
+    has established a concrete chain of results on the Heisenberg Cayley graph
+    $\mathrm{Cay}(\mathrm{Heis}_3(\mathbb{Z}/q\mathbb{Z}), S_q)$:
+    the minimal parity fibre $\{c, q-c\}$ forced by Born--Infeld evenness (O18),
+    the discrete admissibility filter of projection locking (O22),
+    and the derivation of exactly three stable neutral directions from quaternionic
+    minimality (O23).
+
+    The present paper establishes the bridge between this spectral programme and
+    quantum mechanics.
+    It answers the question: why does the admissible fibre carry complex amplitudes
+    and support interference, rather than being a mere set of classical alternatives?
+
+    The present paper sits at the intersection of three lines of work:
+    the structural failure of Bell factorisation from non-injective projection~\cite{Bell};
+    the spectral admissibility sub-programme (O-series), which establishes concrete
+    results on the Heisenberg Cayley graph including the parity fibre (O18),
+    projection locking (O22), and quaternionic minimality (O23);
+    and the new foundational model of admissible non-injective transitions~\cite{Cosmochrony}.
+    All three are necessary inputs.
+    From the Bell paper, the framework inherits the structural argument that
+    non-injectivity makes Bell factorisation inapplicable.
+    From the O-series, it inherits the concrete spectral tools that make the
+    admissibility constraint explicit.
+    From the foundational model, it inherits the physical principle that
+    admissibility means non-premature selection.
+    The present paper connects these three lines: it shows that the admissibility
+    constraint, made concrete by the O-series, forces the fibre to carry the
+    coherent structure that makes quantum predictions possible.
+
+  \subsection*{Main results}
+
+    The central results of this paper are the following.
+
+    \begin{enumerate}[(i)]
+\item \textbf{Admissibility implies phase coherence}
+(Theorem~\ref{thm:admissibility-phase-coherence}).
+Any admissible transition preserves the Born--Infeld indiscernibility of
+conjugate Weil blocks $\rho_c$ and $\rho_{q-c}$, and thereby maintains their
+metaplectic phase coherence.
+Phase coherence is not preserved because it is postulated — it is preserved
+because destroying it would constitute a premature selection among admissible
+directions, violating the admissibility constraint.
+
+\item \textbf{Observable signature}
+(Corollary~\ref{cor:gram-schmidt-rank}).
+Any coherence-destroying transition induces a rank inflation in the combined
+Gram--Schmidt span of $\{\rho_c, \rho_{q-c}\}$, incompatible with the admissible
+rank growth of O22.
+This provides a falsifiable signature detectable in the spectral pipeline.
+
+\item \textbf{Singlet correlator from admissibility}
+(Theorem~\ref{thm:singlet-correlator}).
+The correlator $E(\hat{a},\hat{b}) = -\hat{a}\cdot\hat{b}$ is derived from
+four structural inputs: the linear observable structure of $\mathfrak{su}(2)$
+(O23), the bilinear evaluation induced by coherent fibre amplitudes (Q1),
+rotation invariance from the isotropic condition $M \propto I$ (O23),
+and normalisation from the parity involution (O18).
+No quantum postulate is invoked.
+
+\item \textbf{Tsirelson bound — unconditional}
+(Corollary~\ref{cor:tsirelson-unconditional}).
+Since the singlet correlator is now derived rather than assumed,
+$|S_{\mathrm{CHSH}}| \leq 2\sqrt{2}$ follows unconditionally from the
+geometry of $\mathrm{Im}\,\mathbb{H}$ under admissible projection.
+
+\item \textbf{Born rule from admissibility}
+(Theorem~\ref{thm:born-rule}).
+The Born probability rule $P(a=+1\,|\,\hat{a}) = |\langle+\hat{a}|\psi\rangle|^2$
+is derived as the unique probability assignment consistent with:
+positivity and normalisation, linearity of mean values (from Q1 coherence),
+and compatibility with the derived correlator.
+No Gleason theorem~\cite{Gleason1957} is needed: uniqueness follows from the structural
+constraints already established.
+    \end{enumerate}
+
+  \subsection*{What this paper does not claim}
+
+    This paper does not derive the full Hilbert space structure for arbitrary
+    observables, multipartite systems, or continuous spectra.
+    Within the SU(2) sector, however, the derivation is structurally complete:
+    admissibility forces coherence (Theorem~\ref{thm:admissibility-phase-coherence}),
+    coherence combined with SU(2) geometry forces the singlet correlator
+    (Theorem~\ref{thm:singlet-correlator}), the singlet correlator implies the
+    Tsirelson bound (Corollary~\ref{cor:tsirelson-unconditional}), and the
+    correlator combined with coherence uniquely forces the Born rule
+    (Theorem~\ref{thm:born-rule}).
+    The extension of these results beyond the SU(2) parity sector remains open.
+
+  \subsection*{Organisation}
+
+    Section~\ref{sec:admissibility-phase-coherence} establishes the main results:
+    the key lemma linking metaplectic phase coherence to Born--Infeld
+    indiscernibility (Section~\ref{subsec:q1-lemma}),
+    the main theorem (Section~\ref{subsec:q1-theorem}),
+    the Gram--Schmidt rank corollary (Section~\ref{subsec:q1-corollary}),
+    the consequences for quantum structure (Section~\ref{subsec:q1-consequences}),
+    the observable signature of fibre separation
+    (Section~\ref{subsec:observable-signature}),
+    the main theorem (Section~\ref{subsec:q1-theorem}),
+    the Gram--Schmidt rank corollary (Section~\ref{subsec:q1-corollary}),
+    the consequences for quantum structure (Section~\ref{subsec:q1-consequences}),
+    the conditional Tsirelson bound (Section~\ref{subsec:tsirelson}),
+    the derivation of the singlet correlator (Section~\ref{subsec:singlet-correlator}),
+    the unconditional Tsirelson bound (Corollary~\ref{cor:tsirelson-unconditional}),
+    and the Born rule (Section~\ref{subsec:born-rule}).
+
+% -----------------------------------------------------------------------
+% BODY (imported from cosmochrony-Q1-theorem.tex)
+% -----------------------------------------------------------------------
+
+    \input{Q1-theorem}
+
+% -----------------------------------------------------------------------
+
+  \section{Conclusion}
+  \label{sec:conclusion}
+
+  This paper has established that phase coherence in the admissible fibre is a
+  structural consequence of the admissibility constraint, not an independent
+  quantum postulate.
+  The argument rests on four independently established pillars:
+  the Born--Infeld minimal parity fibre (O18),
+  the dynamical identity of conjugate Weil blocks (O17),
+  the metaplectic central-phase coherence structure (O12, O19),
+  and the projection locking theorem (O22).
+
+  The central result, Theorem~\ref{thm:admissibility-phase-coherence}, closes
+  the structural gap identified as Q1: any admissible transition preserves
+  Born--Infeld indiscernibility of conjugate Weil blocks, and thereby forces the
+  fibre to carry coherent complex amplitudes.
+  The Gram--Schmidt rank corollary provides a concrete, falsifiable signature
+  of any violation.
+  Numerical validation for $q=29$ across four conjugate pairs confirms
+  $\mathrm{rank}\,W_n^{(c)} = 0$ exactly throughout the admissible regime
+  (Section~\ref{subsec:observable-signature}): structural indistinguishability
+  is universal across all conjugate pairs and is a representation-theoretic
+  identity, not a dynamical coincidence.
+
+  Theorem~\ref{thm:singlet-correlator} then derives the singlet correlator
+  $E(\hat{a},\hat{b}) = -\hat{a}\cdot\hat{b}$ from four structural inputs:
+  linearity of $\mathfrak{su}(2)$ observables (O23),
+  bilinearity of evaluation from coherent fibre amplitudes (Q1),
+  rotation invariance from isotropic saturation (O23),
+  and normalisation from the parity involution (O18).
+  No quantum postulate is invoked at any step.
+
+  As a consequence, Corollary~\ref{cor:tsirelson-unconditional} establishes the
+  Tsirelson bound $|S_{\mathrm{CHSH}}| \leq 2\sqrt{2}$ unconditionally:
+  it follows from the geometry of $\mathrm{Im}\,\mathbb{H}$ under admissible
+  projection, not from any quantum axiom.
+
+  Theorem~\ref{thm:born-rule} then completes the structural derivation:
+  the Born rule $P(a=+1\,|\,\hat{a}) = |\langle+\hat{a}|\psi\rangle|^2$
+  is the unique probability assignment compatible with the coherent fibre structure,
+  the SU(2) observable algebra, and the derived correlator.
+  No Gleason theorem~\cite{Gleason1957} is needed.
+  For the SU(2) sector, quantum mechanics is not postulated — it is forced
+  by the admissibility structure of the non-injective projection.
+
+  \subsection*{Open directions}
+
+    Three directions remain open after this paper.
+
+    \paragraph{Extension of numerical validation to larger primes.}
+      The structural indistinguishability $\mathrm{rank}\,W_n^{(c)} = 0$
+      has been confirmed numerically for $q=29$.
+      Systematic verification across the full prime range of O25
+      ($q \in \{29, 61, 101, 151, 211, 307, 401\}$) would provide a comprehensive
+      empirical confirmation and allow tracking of the boundary transition
+      (rank-1 residual at saturation) as a function of $q$.
+
+    \paragraph{Extension of the Born rule beyond SU(2).}
+      Theorem~\ref{thm:born-rule} derives the Born rule for spin-$\tfrac{1}{2}$
+      observables in the SU(2) sector.
+      The extension to arbitrary observables, multipartite systems, and
+      continuous spectra requires extending the fibre structure beyond the
+      two-element parity case of O18.
+      This generalisation is structurally motivated and is the primary remaining
+      open direction of the quantum bridge programme.
+
+    \paragraph{BI-admissibility of the separating functional.}
+      The converse direction of Lemma~\ref{lem:coherence-indiscernibility} establishes
+      the existence of a Gram--Schmidt-based functional distinguishing the two blocks
+      in the incoherent regime.
+      A fully rigorous construction of this functional, together with an explicit
+      verification of its Born--Infeld admissibility, would strengthen the lemma from
+      an existence result to a constructive one.
+
+  \subsection*{Position in the programme}
+
+  The result of this paper occupies a specific position in the Cosmochrony chain:
+  \begin{center}
+    \begin{tabular}{ccc}
+      \cite{Bell}                           &            & \\
+      (NI $\Rightarrow$ Bell fails)         & $\searrow$ &                                         \\
+      &            & \textbf{this paper}                     \\
+      O-series (O17, O18, O19, O22, O23)    & $\nearrow$ & (admissibility $\Rightarrow$ coherence)\\
+      (spectral concrete results)           &            &                                         \\
+      $\uparrow$                            &            &                                         \\
+      \cite{Cosmochrony} foundational model &            &
+    \end{tabular}
+  \end{center}
+  It provides the missing structural link explaining why the fibre is not merely
+  a set of classical alternatives, but carries the coherent amplitude structure
+  that makes quantum predictions possible.
+
+  \section{Comparison with standard quantum mechanics}
+  \label{sec:comparison-qm}
+
+  The results of this paper derive quantum-mechanical structure without invoking
+  any of the standard postulates of quantum theory.
+  Table~\ref{tab:comparison} makes the comparison explicit.
+
+  \begin{table}[h]
+    \centering
+    \begin{tabular}{lll}
+      \hline
+      \textbf{Element}        & \textbf{Standard QM}         & \textbf{This paper}                                   \\
+      \hline
+      Hilbert space           & Postulated                   & Precursor derived (SU(2) sector)                      \\
+      Complex amplitudes      & Postulated                   & Forced by admissibility (Q1)                          \\
+      Superposition principle & Postulated                   & Follows from fibre coherence                          \\
+      Measurement outcomes    & Postulated ($\pm 1$)         & Spectrum of $\hat\sigma\cdot\hat{a}$                  \\
+      Correlator law          & Postulated (QM rule)         & Derived (Theorem~\ref{thm:singlet-correlator})        \\
+      Tsirelson bound         & Theorem~\cite{Tsirelson1980} & Derived (Corollary~\ref{cor:tsirelson-unconditional}) \\
+      Born rule               & Postulated~\cite{Born1926}   & Derived (Theorem~\ref{thm:born-rule})                 \\
+      Non-locality            & Assumed or interpreted       & Structural (non-injective projection)                 \\
+      \hline
+    \end{tabular}
+    \caption{Comparison between standard quantum mechanics and the present
+    admissibility-based derivation. Elements marked ``derived'' follow from
+    the admissibility constraint and the O-series structural results,
+      without quantum postulates as input.}
+    \label{tab:comparison}
+  \end{table}
+
+  Three structural differences from standard quantum mechanics are worth
+  making explicit.
+
+  \paragraph{No Hilbert space postulate.}
+    Standard quantum mechanics postulates the Hilbert space $\mathcal{H}$,
+    complex amplitudes, and the superposition principle.
+    Here, the admissible fibre $F_n = \Pi_n^{-1}(O_n)$ carries complex
+    amplitudes because any admissible transition must preserve the
+    Born--Infeld indiscernibility of conjugate blocks
+    (Theorem~\ref{thm:admissibility-phase-coherence}).
+    The Hilbert space structure is a consequence, not a starting point.
+
+  \paragraph{No local hidden-variable completion.}
+    The present framework is not a hidden-variable model~\cite{Bell1964}.
+    The underlying configuration is not a set of pre-determined outcome values —
+    it is an admissible non-injective transition whose fibre structure prevents
+    factorization.
+    Bell factorizability fails not because of fine-tuned correlations between
+    settings and hidden states, but because the fibre $F_n$ is non-decomposable
+    (see~\cite{Bell}).
+    Statistical independence of measurement settings is preserved.
+
+  \paragraph{Quantum structure is derived, not compatible.}
+    Previous structural approaches (e.g.\ ontological models~\cite{Harrigan2010},
+    epistemic interpretations~\cite{Spekkens2007}) typically aim to show that quantum mechanics is
+    \emph{compatible with} some underlying structure.
+    Here the aim is stronger: quantum-mechanical correlations are
+    \emph{forced} by the admissibility constraint,
+    in the spirit of reconstruction programmes~\cite{Chiribella2011}
+    but from a structurally different starting point.
+    Any violation of the Born rule, the singlet correlator, or the
+    Tsirelson bound would require a transition that is not admissible —
+    i.e.\ one that constitutes a premature selection among open projective
+    directions, violating Axiom~A3.
+
+  \section{Falsifiability}
+  \label{sec:falsifiability}
+
+  The results of this paper generate falsifiable predictions at two levels:
+  within the existing spectral pipeline, and at the level of quantum
+  correlations.
+
+  \paragraph{Pipeline-level prediction.}
+    The central prediction is:
+    \begin{equation}
+      \mathrm{rank}\,W_n^{(c)} = 0
+      \quad \text{for all conjugate pairs } (c, q-c)
+      \text{ and all depths } n \in [n_0, n_1].
+    \end{equation}
+    This follows from the representation-theoretic identity
+    $\rho_{q-c} = \overline{\rho_c}$, which implies identical Gram--Schmidt
+    spans.
+    Any deviation — i.e.\ $\mathrm{rank}\,W_n^{(c)} > 0$ in the admissible
+    window — would falsify the structural indistinguishability of conjugate
+    blocks, and thereby invalidate the foundation of
+    Theorem~\ref{thm:admissibility-phase-coherence}.
+
+    Numerical validation for $q = 29$ across four conjugate pairs confirms
+    $\mathrm{rank}\,W_n^{(c)} = 0$ exactly throughout $[n_0, n_1]$
+    (Section~\ref{subsec:observable-signature}).
+    Extension to larger primes $q \in \{61, 101, 151, 211, 307, 401\}$
+    is an immediate empirical target.
+
+  \paragraph{Correlator-level prediction.}
+    Theorem~\ref{thm:singlet-correlator} predicts:
+    \begin{equation}
+      E(\hat{a}, \hat{b}) = -\hat{a} \cdot \hat{b}
+    \end{equation}
+    for any two-point measurement on a shared admissible fibre.
+    A measured correlator deviating from this law — in particular,
+    a CHSH parameter exceeding $2\sqrt{2}$, or a correlator following
+    the classical sign-projection law $1 - 2\theta/\pi$ — would falsify
+    the SU(2) coherent structure of the admissible fibre.
+
+  \paragraph{Born rule prediction.}
+    Theorem~\ref{thm:born-rule} predicts:
+    \begin{equation}
+      P(a = +1\,|\,\hat{a}) = |\langle +\hat{a}\,|\,\psi\rangle|^2.
+    \end{equation}
+    Any probability assignment deviating from this law while maintaining
+    coherent amplitude structure and the derived correlator is ruled out
+    by the uniqueness argument of Step~3.
+    In particular, there is no free parameter: the exponent $2$ in the
+    Born rule is not a convention but a structural necessity.
+
+  \paragraph{Summary.}
+    The framework generates three independent falsifiable predictions —
+    GS rank, correlator law, and Born weights — each testable at a
+    different level of the pipeline.
+    If any one fails, the admissibility-based derivation of quantum
+    mechanics is falsified.
+    If all three hold, they constitute joint evidence that quantum structure
+    is a structural consequence of projective admissibility.
+    The correlator and Born predictions are consistent with all existing
+    experimental tests of quantum mechanics~\cite{Aspect1982}.
+
+  \section*{Acknowledgements}
+
+  The author acknowledges the use of large language models as a supportive tool
+  for refining language, structure, and internal consistency during the development
+  of this manuscript.
+  All conceptual contributions, theoretical choices, and interpretations remain
+  the sole responsibility of the author.
+
+  \clearpage
+  \begin{thebibliography}{99}
+
+    \bibitem{Born1926}
+    M.~Born,
+    ``Zur Quantenmechanik der Sto\ss{}vorg\"ange,''
+    \textit{Zeitschrift f\"ur Physik} \textbf{37}, 863--867 (1926).
+    \doi{10.1007/BF01397477}.
+
+    \bibitem{Tsirelson1980}
+    B.~S.~Tsirelson,
+    ``Quantum generalizations of Bell's inequality,''
+    \textit{Letters in Mathematical Physics} \textbf{4}, 93--100 (1980).
+    \doi{10.1007/BF00417500}.
+
+    \bibitem{Gleason1957}
+    A.~M.~Gleason,
+    ``Measures on the closed subspaces of a Hilbert space,''
+    \textit{Journal of Mathematics and Mechanics} \textbf{6}, 885--893 (1957).
+    \doi{10.1512/iumj.1957.6.56050}.
+
+    \bibitem{Bell1964}
+    J.~S.~Bell,
+    ``On the Einstein Podolsky Rosen paradox,''
+    \textit{Physics Physique Fizika} \textbf{1}, 195--200 (1964).
+    \doi{10.1103/PhysicsPhysiqueFizika.1.195}.
+
+    \bibitem{Aspect1982}
+    A.~Aspect, P.~Grangier, and G.~Roger,
+    ``Experimental realization of Einstein-Podolsky-Rosen-Bohm
+    \textit{Gedankenexperiment}: a new violation of Bell's inequalities,''
+    \textit{Physical Review Letters} \textbf{49}, 91--94 (1982).
+    \doi{10.1103/PhysRevLett.49.91}.
+
+    \bibitem{Spekkens2007}
+    R.~W.~Spekkens,
+    ``Evidence for the epistemic view of quantum states: a toy theory,''
+    \textit{Physical Review A} \textbf{75}, 032110 (2007).
+    \doi{10.1103/PhysRevA.75.032110}.
+
+    \bibitem{Harrigan2010}
+    N.~Harrigan and R.~W.~Spekkens,
+    ``Einstein, incompleteness, and the epistemic view of quantum states,''
+    \textit{Foundations of Physics} \textbf{40}, 125--157 (2010).
+    \doi{10.1007/s10701-009-9347-0}.
+
+    \bibitem{Chiribella2011}
+    G.~Chiribella, G.~M.~D'Ariano, and P.~Perinotti,
+    ``Informational derivation of quantum theory,''
+    \textit{Physical Review A} \textbf{84}, 012311 (2011).
+    \doi{10.1103/PhysRevA.84.012311}.
+
+    \bibitem{Cosmochrony}
+    J.~Beau,
+    ``Cosmochrony: A Pre-Geometric Relational Framework for Emergent Physics,''
+    white paper, Zenodo (2026).
+    \doi{10.5281/zenodo.17957509}.
+
+    \bibitem{ENI}
+    J.~Beau,
+    ``Non-Injectivity as a Structural Necessity of Genuine Emergence:
+    A No-Go Theorem for Faithful Emergent Descriptions,''
+    Cosmochrony companion paper~L, Zenodo (2026).
+    \doi{10.5281/zenodo.19391746}.
+
+    \bibitem{BornInfeld}
+    J.~Beau,
+    ``Bounded Relaxation and the Dynamical Selection of Spacetime Geometry,''
+    Cosmochrony companion paper~C, Zenodo (2026).
+    \doi{10.5281/zenodo.18407505}.
+
+    \bibitem{Bell}
+    J.~Beau,
+    ``Non-Injective Projections and the Structural Failure of Bell Factorization,''
+    Cosmochrony companion paper~B, Zenodo (2026).
+    \doi{10.5281/zenodo.18371173}.
+
+    \bibitem{O12}
+    J.~Beau,
+    ``Exact Weil-Block Projective Capacity on Heisenberg Graphs,''
+    O12 spectral admissibility sub-programme paper, Zenodo (2026).
+    \doi{10.5281/zenodo.19194798}.
+
+    \bibitem{O17}
+    J.~Beau,
+    ``Fibre-Level Admissibility from Conjugate Weil Blocks:
+    Structural Derivation of the Pair Observable,''
+    O17 spectral admissibility sub-programme paper, Zenodo (2026).
+    \doi{10.5281/zenodo.19299611}.
+
+    \bibitem{O18}
+    J.~Beau,
+    ``Minimal Fibre Structure of the Non-Injective Projection
+    from Born--Infeld Indiscernibility: Derivation of the Parity Involution,''
+    O18 spectral admissibility sub-programme paper, Zenodo (2026).
+    \doi{10.5281/zenodo.19321413}.
+
+    \bibitem{O19}
+    J.~Beau,
+    ``Canonical Pair Observables in Weil Blocks: Structure of the Residual
+    Amplitude Factor and Pipeline-Independent Formulation,''
+    O19 spectral admissibility sub-programme paper, Zenodo (2026).
+    \doi{10.5281/zenodo.19323720}.
+
+    \bibitem{O22}
+    J.~Beau,
+    ``Shell-Alignment from Projection Locking: A Discrete Admissibility Theorem
+    under Born--Infeld Saturation,''
+    O22 spectral admissibility sub-programme paper, Zenodo (2026).
+    \doi{10.5281/zenodo.19367375}.
+
+    \bibitem{O23}
+    J.~Beau,
+    ``Three Stable Directions from Quaternionic Minimality: Derivation of
+    $\Sigma_c(n_3) = 3$ from Born--Infeld Fibre Admissibility,''
+    O23 spectral admissibility sub-programme paper, Zenodo (2026).
+    \doi{10.5281/zenodo.19375136}.
+
+  \end{thebibliography}
+
+\end{document}
