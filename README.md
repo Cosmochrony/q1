@@ -43,7 +43,6 @@ q1/
 
 ## Links
 
-- 📄 [Paper PDF](out/Q1-paper.pdf)
 - 🔗 DOI: [10.5281/zenodo.19561060](https://doi.org/10.5281/zenodo.19561060)
 - 🌐 Website: https://cosmochrony.org/science/quantum-structure/q1/
 
