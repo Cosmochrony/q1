@@ -1,8 +1,8 @@
 # Q1 — From Admissibility to Quantum Structure
 
 This repository contains the source of the **Q1 Cosmochrony paper**
-[*From Admissibility to Quantum Structure: Phase Coherence and Correlations from
-Non-Injective Projection*](out/Q1-paper.pdf).
+*From Admissibility to Quantum Structure: Phase Coherence and Correlations from
+Non-Injective Projection*.
 
 This paper establishes that quantum-mechanical **phase coherence is not an independent
 postulate but a structural consequence of projective admissibility**.
