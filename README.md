@@ -21,9 +21,12 @@ A constructive separating functional $R_n^{(c)}$ is exhibited and proved BI-admi
 Numerical validation for $q = 29$ across four conjugate pairs confirms
 $\operatorname{rank} W_n^{(c)} = 0$ exactly throughout the admissible regime — establishing
 structural indistinguishability of conjugate blocks as a representation-theoretic fact rather
-than a dynamical coincidence. The admissible fibre therefore carries complex amplitude
-structure with interference, the natural precursor of an effective Hilbert sector — without
-quantum mechanics as a postulate.
+than a dynamical coincidence. The admissible fibre is realised within the complex amplitude
+structure of the Weil representation carrier supplied by O18 and O23; admissibility preserves
+that carrier's phase coherence, the natural precursor of an effective Hilbert sector, but does
+not itself derive the carrier's complex scalar structure. Conditional on that supplied carrier,
+the singlet correlator and the Born rule follow as the unique structures compatible with the
+preserved coherence, without any further quantum postulate.
 
 ## Keywords
 
