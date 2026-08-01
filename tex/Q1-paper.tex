@@ -56,8 +56,9 @@ Phase Coherence and Correlations from Non-Injective Projection}
     The singlet correlator $E(\hat{a},\hat{b}) = -\hat{a}\cdot\hat{b}$ is then derived, conditional on
     this supplied carrier, from the preserved phase coherence, the parity involution (O18), and the
     isotropic SU(2) structure (O23) alone.
-    As a consequence, the Tsirelson bound $|S_{\mathrm{CHSH}}| \leq 2\sqrt{2}$ follows
-    unconditionally from the geometry of $\mathrm{Im}\,\mathbb{H}$ under admissible projection.
+    As a consequence, within that same supplied carrier, the Tsirelson bound
+    $|S_{\mathrm{CHSH}}| \leq 2\sqrt{2}$ follows unconditionally — with no further free parameter —
+    from the geometry of $\mathrm{Im}\,\mathbb{H}$ under admissible projection.
     Finally, conditional on the same supplied carrier, the Born probability rule
     $P(a=+1\,|\,\hat{a}) = |\langle+\hat{a}|\psi\rangle|^2$ is shown to be the unique probability
     assignment compatible with the coherent fibre structure, the SU(2) observable algebra, and the
@@ -81,10 +82,13 @@ Phase Coherence and Correlations from Non-Injective Projection}
   open questions in the foundations of physics.
   Standard formulations of quantum mechanics postulate the Hilbert space structure,
   complex amplitudes, and the superposition principle as axioms.
-  The present paper shows that, within the projective admissibility framework of
-  Cosmochrony~\cite{Cosmochrony}, phase coherence is not postulated but derived:
-  it is a necessary consequence of the admissibility constraint that governs
-  which transitions between observable states are physically realised.
+  The present paper does not derive that complex Hilbert-space carrier: within the projective
+  admissibility framework of Cosmochrony~\cite{Cosmochrony}, the carrier is supplied by the Weil
+  representation of O18 and O23.
+  What is not postulated but derived is narrower and more specific: phase coherence of that supplied
+  carrier is a necessary consequence of the admissibility constraint that governs which transitions
+  between observable states are physically realised, rather than an independent assumption about how
+  the carrier behaves.
 
   \subsection*{Context and position in the programme}
 
@@ -159,11 +163,11 @@ rotation invariance from the isotropic condition $M \propto I$ (O23),
 and normalisation from the parity involution (O18).
 No quantum postulate beyond the supplied carrier is invoked.
 
-\item \textbf{Tsirelson bound — unconditional}
+\item \textbf{Tsirelson bound — unconditional within the carrier}
 (Corollary~\ref{cor:tsirelson-unconditional}).
-Since the singlet correlator is now derived rather than assumed,
-$|S_{\mathrm{CHSH}}| \leq 2\sqrt{2}$ follows unconditionally from the
-geometry of $\mathrm{Im}\,\mathbb{H}$ under admissible projection.
+Since the singlet correlator is now derived rather than assumed, within the supplied carrier,
+$|S_{\mathrm{CHSH}}| \leq 2\sqrt{2}$ follows unconditionally — with no further free parameter —
+from the geometry of $\mathrm{Im}\,\mathbb{H}$ under admissible projection.
 
 \item \textbf{Born rule from admissibility}
 (Theorem~\ref{thm:born-rule}).
@@ -960,9 +964,11 @@ consistent with Proposition~\ref{prop:bi-admissibility-R}.
   \item the parity involution $\{c, q-c\}$ forced by Born--Infeld evenness
   (O18, Theorem~3.3) — for normalisation $k = 1$.
     \end{enumerate}
-    It does not use: the Born rule, the Hilbert space axioms, quantum mechanical
-    postulates, or any assumption about the dynamics of the observable system.
-    The corrélator emerges from the geometry of the admissible fibre alone.
+    Beyond that supplied carrier, it does not use: the Born rule, any further Hilbert-space axiom, any
+    quantum-mechanical probability postulate, or any assumption about the dynamics of the observable
+    system.
+    The correlator emerges from the geometry of the admissible fibre once its carrier is supplied, not
+    from the admissible fibre alone.
   \end{remark}
 
   \begin{corollary}[Tsirelson bound — unconditional]
@@ -1005,7 +1011,7 @@ consistent with Proposition~\ref{prop:bi-admissibility-R}.
   the derived correlator uniquely fixes the Born probability rule, completing the structural part of
   the derivation that this framework can supply.
 
-  The argument is self-contained within that carrier: it uses only the corrélator derived in
+  The argument is self-contained within that carrier: it uses only the correlator derived in
   Theorem~\ref{thm:singlet-correlator}, the carrier's preserved coherence of
   Theorem~\ref{thm:admissibility-phase-coherence}, and the SU(2) structure of O23.
   No probability postulate beyond this structural consistency requirement is invoked; the carrier
@@ -1287,13 +1293,13 @@ consistent with Proposition~\ref{prop:bi-admissibility-R}.
       \hline
       \textbf{Element}        & \textbf{Standard QM}         & \textbf{This paper}                                   \\
       \hline
-      Hilbert space           & Postulated                   & Precursor preserved (SU(2) sector, carrier supplied)  \\
+      Hilbert space           & Postulated                   & Precursor preserved (SU(2), carrier supplied)         \\
       Complex amplitudes      & Postulated                   & Carrier supplied; coherence preserved (Q1)            \\
-      Superposition principle & Postulated                   & Follows from the carrier's preserved coherence        \\
+      Superposition principle & Postulated                   & Carrier supplied; not a further consequence           \\
       Measurement outcomes    & Postulated ($\pm 1$)         & Spectrum of $\hat\sigma\cdot\hat{a}$                  \\
-      Correlator law          & Postulated (QM rule)         & Derived within the carrier (Theorem~\ref{thm:singlet-correlator}) \\
-      Tsirelson bound         & Theorem~\cite{Tsirelson1980} & Derived within the carrier (Corollary~\ref{cor:tsirelson-unconditional}) \\
-      Born rule               & Postulated~\cite{Born1926}   & Unique within the carrier (Theorem~\ref{thm:born-rule}) \\
+      Correlator law          & Postulated (QM rule)         & Derived in carrier (Thm~\ref{thm:singlet-correlator}) \\
+      Tsirelson bound         & Theorem~\cite{Tsirelson1980} & Derived (Cor~\ref{cor:tsirelson-unconditional})       \\
+      Born rule               & Postulated~\cite{Born1926}   & Unique in carrier (Thm~\ref{thm:born-rule})           \\
       Non-locality            & Assumed or interpreted       & Structural (non-injective projection)                 \\
       \hline
     \end{tabular}
