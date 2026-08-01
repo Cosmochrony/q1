@@ -7,7 +7,7 @@ authors:
     given-names: "Jérôme"
 repository-code: "https://github.com/Cosmochrony/q1"
 url: "https://cosmochrony.org/science/quantum-structure/q1/"
-version: "1.1.1"
+version: "1.1.2"
 doi: "10.5281/zenodo.19561060"
 license: "CC-BY-4.0"
 preferred-citation:
