@@ -136,6 +136,53 @@ def test_generic_block_theorem(q: int, bfs_frac: float) -> None:
           len(result["failures"]) == 0)
 
 
+def test_frame_invariance(q: int) -> None:
+    """
+    Covers the paper's Lemma "Constant modulus", the constructive proof of
+    Corollary "Frame no-go" (x_qc[i] = d_i * x_c[iota(i)], |d_i|=1, via the
+    explicit index involution, not merely Gram-matrix orbit-equality), and
+    the normalised Bargmann invariant of Example "Normalised Bargmann
+    triples" (=1 on a colinear triple, =0 by the extension convention on a
+    triple containing an orthogonal pair). Independent review (2026-08-07)
+    found this claimed numerically in the paper but not versioned anywhere;
+    this closes that gap.
+    """
+    from spectral_O12 import fingerprint_vectors_batch
+    from frame_invariance_check import index_involution, normalised_bargmann
+
+    gens = build_generators(q)
+    gens_arr = np.array(gens, dtype=np.int64)
+    shells = bfs_shells(None, None, gens, q, 0.50)
+    shell = shells[6]
+    shell_arr = np.array(shell, dtype=np.int64)
+    M = len(shell)
+    iota_of = index_involution(shell, gens, q)
+
+    for c in (1, 3, 7, 11):
+        qmc = q - c
+        x_c = fingerprint_vectors_batch(shell_arr, np.array([c, 0, 0]), gens_arr, q)
+        x_qc = fingerprint_vectors_batch(shell_arr, np.array([qmc, 0, 0]), gens_arr, q)
+
+        mags_ok = np.allclose(np.abs(x_c), q ** -1.5) and np.allclose(np.abs(x_qc), q ** -1.5)
+        check(f"q={q} c={c}: entrywise magnitude is the constant q^-1.5 (Lemma, constant modulus)",
+              mags_ok)
+
+        mask = np.abs(x_c[iota_of]) > 1e-12
+        ratio = np.where(mask, x_qc / np.where(mask, x_c[iota_of], 1), 0)
+        d_moduli_ok = np.allclose(np.abs(ratio[mask]), 1.0, atol=1e-8)
+        check(f"q={q} c={c}: x_qc[i] = d_i * x_c[iota(i)] with |d_i|=1 for all i "
+              f"(Corollary, frame no-go, constructive proof)", d_moduli_ok)
+
+        b_c_colinear = normalised_bargmann(x_c, 0, M, 2 * M)
+        b_qc_colinear = normalised_bargmann(x_qc, 0, M, 2 * M)
+        b_c_mixed = normalised_bargmann(x_c, 0, 1, M + 1)
+        b_qc_mixed = normalised_bargmann(x_qc, 0, 1, M + 1)
+        bargmann_ok = (abs(b_c_colinear - 1) < 1e-9 and abs(b_qc_colinear - 1) < 1e-9
+                       and abs(b_c_mixed) < 1e-9 and abs(b_qc_mixed) < 1e-9)
+        check(f"q={q} c={c}: normalised Bargmann = 1 on a colinear triple, "
+              f"= 0 (extension convention) across an orthogonal pair, both sectors", bargmann_ok)
+
+
 def main() -> None:
     for q in (13, 17, 29):
         test_shells_complete_and_symmetric(q, 0.99)
@@ -145,6 +192,7 @@ def main() -> None:
         test_generic_block_theorem(q, 0.99)
     for q in (17, 29):
         test_exact_support_matches_numeric_rank(q)
+    test_frame_invariance(29)
 
     print()
     if FAILURES:

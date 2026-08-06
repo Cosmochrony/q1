@@ -18,3 +18,7 @@ media/
 *.out
 *.synctex.gz
 *.toc
+
+# Figure-script PNG byproducts (the PDF, included in the paper, is versioned;
+# the PNG sidecar is a convenience preview, not referenced by the tex)
+code/*.png
