@@ -31,6 +31,28 @@ Outputs (saved in current directory):
   table_sensitivity.txt   -- Table 4: sensitivity analysis
   table_e2.txt            -- condition (E2) assessment
   table_beta.txt          -- Table 5: implied beta* ranges
+
+BEHAVIOUR CHANGE (2026-08-05, THIS COPY ONLY -- see
+quantum-structure/notes/q1-central-theorem-audit.md):
+  bfs_shells() used to stop mid-shell as soon as the max_fraction*q^3 node
+  quota was reached, silently keeping a PARTIAL final shell. It now always
+  completes the shell in progress, so max_fraction is a floor, not a
+  mid-shell cutoff; the final shell's actual size can now overshoot the
+  requested quota (confirmed to matter: a partial final shell breaks
+  inversion symmetry and was the source of a spurious nonzero rank residual
+  in Q1's separator figure, wrongly attributed to floating-point saturation).
+  This changes bfs_shells' return value for EVERY caller in this file, not
+  only the separator scripts: compute_block_capacity/run_one_prime (the O12
+  capacity/delta-exponent pipeline) also consume it, and their sigma_bar /
+  shell_sizes for the LAST shell of a run can differ slightly from before.
+  Not yet assessed here whether this shifts any number in this file's own
+  fitting/table output -- that is a separate, deferred audit, out of scope
+  for the current Q1-only chantier.
+  IMPORTANT: this fix has NOT been ported to the canonical O12 repository
+  (admissibility/o12/code/spectral_O12.py), which still has the original
+  mid-shell-truncating bfs_shells as of 2026-08-05. This file is Q1's own
+  vendored copy; editing it does not affect O12's published results, but the
+  same latent issue is present there and is flagged, not fixed, here.
 """
 
 import numpy as np
@@ -89,9 +111,15 @@ def build_generators(q):
 
 def bfs_shells(elems, idx, gens, q, max_fraction):
     """
-    BFS from identity, stopping when max_fraction * q^3 nodes visited.
+    BFS from identity, stopping once max_fraction * q^3 nodes have been visited.
     elems/idx kept for API compatibility but unused.
     Returns list of shells; shell[n] = list of (a,b,gamma) at BFS depth n.
+
+    max_fraction is a FLOOR, not a mid-shell cutoff: every shell returned is
+    always built to completion. Cutting a shell short mid-generation breaks
+    its inversion symmetry under {+/-X, +/-Y} and silently distorts every
+    downstream symmetry-dependent computation (audit of 2026-08-05: the only
+    asymmetric shell at q=17 and q=29 was the truncated final one).
     """
     identity = (0, 0, 0)
     max_nodes = int(max_fraction * q ** 3)
@@ -108,10 +136,6 @@ def bfs_shells(elems, idx, gens, q, max_fraction):
                     visited.add(v)
                     next_shell.append(v)
                     total += 1
-                    if total >= max_nodes:
-                        break
-            if total >= max_nodes:
-                break
         if not next_shell:
             break
         shells.append(next_shell)
@@ -229,22 +253,29 @@ def gram_schmidt_batch(basis_mat, new_vecs, eps=EPS_GS):
     return basis_mat, delta_r
 
 
-def coherence_length(shells, q):
+def coherence_length(shells, q, c=1):
     """
-    ell_gamma(n) = |mean_{g in S_n} exp(2pi i gamma_g / q)|.
-    Measures how uniformly gamma is distributed across shell S_n.
-    ell_gamma ~ 1: gamma effectively frozen (proxy regime).
-    ell_gamma ~ 0: gamma fully diversified (exact dynamics active).
+    ell_gamma^(c)(n) = |mean_{g in S_n} exp(2 pi i c gamma_g / q)|, matching the
+    c-weighted definition in Q1-paper.tex eq:coherence-length.
+
+    c defaults to 1 for backward compatibility, but this is NOT the physically
+    intended default: prior to the 2026-08-05 audit this function silently
+    dropped the c factor altogether (always computed the c=1 curve), so every
+    conjugate pair in the published figure was plotting the identical curve
+    regardless of its own c. Callers comparing pairs MUST pass each pair's own
+    c explicitly.
+
+    ell ~ 1: the central phase for THIS c is effectively frozen across S_n.
+    ell ~ 0: the central phase for THIS c is fully diversified across S_n.
     """
     ell = []
     for shell in shells:
         if len(shell) == 0:
             ell.append(0.0)
             continue
-        phases = np.array([np.exp(2j * np.pi * g / q) for (a, b, g) in shell])
+        phases = np.array([np.exp(2j * np.pi * c * g / q) for (a, b, g) in shell])
         ell.append(abs(phases.mean()))
     return np.array(ell)
-
 
 
 def compute_block_capacity(shells, c_block, q, gens, n_max=None):
@@ -345,21 +376,6 @@ def find_fitting_window(ns, sigma_bar, q):
     n0 = int(ns[n0_idx])
     n1 = int(ns[n1_idx])
     return n0, n1
-
-
-def coherence_length(shells, q):
-    """
-    Compute ell_gamma(n) = |mean_g_in_Sn exp(2pi i gamma_g / q)| per shell.
-    This is the coherence of the central coordinate across the shell.
-    """
-    ell = []
-    for shell in shells:
-        if len(shell) == 0:
-            ell.append(0.0)
-            continue
-        phases = np.array([np.exp(2j * np.pi * g / q) for (a, b, g) in shell])
-        ell.append(abs(phases.mean()))
-    return np.array(ell)
 
 
 def run_one_prime(q, m_block, n_max, bfs_frac, seed, stratified=False):

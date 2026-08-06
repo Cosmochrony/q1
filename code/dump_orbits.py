@@ -90,19 +90,19 @@ def compute_separator_at_depth(shells, c, q, gens, depth: int,
         x_qc = collect_orbit_vectors(shells, [q_minus_c, 0, 0], gens, q, depth)
 
     if x_c.shape[0] == 0 or x_qc.shape[0] == 0:
-        return dict(depth=depth, rank_vc=0, rank_vqc=0, rank_w=0,
+        return dict(depth=depth, rank_vc=0, rank_vqc=0, residual_rank=0,
                     energy_c=0.0, energy_qc=0.0, r_trace=None,
-                    ell_gamma=float(coherence_length(shells, q)[depth]))
+                    ell_gamma=float(coherence_length(shells, q, c=c)[depth]))
 
     # Transpose: separator expects (d, m) not (m, d)
     result = separator_scores(x_c.T, x_qc.T, tol=EPS_GS)
-    ell = coherence_length(shells, q)
+    ell = coherence_length(shells, q, c=c)
 
     return dict(
         depth=depth,
         rank_vc=result.rank_vc,
         rank_vqc=result.rank_vqc,
-        rank_w=result.rank_w,
+        residual_rank=result.residual_rank,
         energy_c=result.energy_c,
         energy_qc=result.energy_qc,
         r_trace=result.r_trace,
@@ -145,16 +145,14 @@ def main() -> None:
     n_shells = len(shells)
     print(f"BFS: {n_shells} shells")
 
-    ell = coherence_length(shells, q)
-
     if args.all_depths:
-        print(f"\n{'depth':>6} {'ell_gamma':>10} {'rank_W':>8} "
+        print(f"\n{'depth':>6} {'ell_gamma':>10} {'resid_rk':>8} "
               f"{'energy_c':>12} {'energy_qc':>12}")
         print("-" * 55)
         for depth in range(1, n_shells):
             res = compute_separator_at_depth(
                 shells, c, q, gens, depth, cumulative=args.cumulative)
-            print(f"{depth:>6} {res['ell_gamma']:>10.4f} {res['rank_w']:>8} "
+            print(f"{depth:>6} {res['ell_gamma']:>10.4f} {res['residual_rank']:>8} "
                   f"{res['energy_c']:>12.6f} {res['energy_qc']:>12.6f}")
         return
 
