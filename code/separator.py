@@ -16,7 +16,7 @@ Array = np.ndarray
 class SeparatorResult:
     rank_vc: int
     rank_vqc: int
-    rank_w: int
+    residual_rank: int
     energy_c: float
     energy_qc: float
     r_trace: float | None
@@ -65,10 +65,36 @@ def projector_from_basis(q: Array) -> Array:
 
 def separating_subspace_basis(qc: Array, qqc: Array, tol: float = 1e-10) -> Array:
     """
-    Compute an orthonormal basis of W = V_c ∩ (V_qc)^⊥.
+    Compute an orthonormal basis of the RESIDUAL (I - P_qc) V_c, i.e. the
+    orthogonal projection of V_c onto (V_qc)^perp.
 
-    If Qc spans V_c and Qqc spans V_qc, then W is the column span of
-    (I - P_qc) Qc after re-orthonormalization.
+    This is NOT, in general, a basis of the set intersection V_c ∩ (V_qc)^perp
+    (audit of 2026-08-05: two distinct, non-orthogonal 1-dimensional subspaces
+    give a nonzero residual here while their true intersection is {0} —
+    confirmed by an explicit countermodel). Do not call this "W" or its rank
+    "rank_W" as if it computed the intersection; that identification is what
+    the published Q1 text and this docstring both got wrong.
+
+    What it DOES prove, exactly, by rank-nullity applied to v -> (I-P_qc)v
+    restricted to V_c (kernel = V_c ∩ V_qc, since ker(I-P_qc) = V_qc):
+
+        dim V_c = dim(V_c ∩ V_qc) + residual_rank.
+
+    So residual_rank == 0  <=>  V_c ∩ V_qc = V_c  <=>  V_c subseteq V_qc.
+    Combined with dim V_c == dim V_qc (conjugation preserves rank, always,
+    for ANY c -- elementary, not specific to this construction), a TRUE
+    residual_rank == 0 would prove V_c == V_qc exactly, as literal subspaces,
+    not merely isomorphic ones. This is a valid route to the subspace-identity
+    conclusion Q1 wanted; the invalid route was claiming the raw intersection
+    is automatically nonzero whenever V_c != V_qc, which is false in general.
+
+    CAVEAT: this function itself only ever reports a SVD-tolerance zero
+    (`tol`), not a mathematically exact one -- "residual_rank == 0" as
+    returned by THIS code is numerical evidence, not a proof. The exactness
+    comes only from the separate combinatorial argument in
+    exact_fourier_support.py (integer arithmetic, no tolerance), which is what
+    actually establishes V_c == V_qc for the special block [c,0,0]; do not
+    read a numeric zero from this module, on its own, as already exact.
     """
     if qc.shape[0] != qqc.shape[0]:
         raise ValueError(
@@ -148,7 +174,7 @@ def separator_scores(
     return SeparatorResult(
         rank_vc=qc.shape[1],
         rank_vqc=qqc.shape[1],
-        rank_w=qw.shape[1],
+        residual_rank=qw.shape[1],
         energy_c=energy_c,
         energy_qc=energy_qc,
         r_trace=r_trace,
@@ -209,7 +235,7 @@ def main() -> None:
     payload = {
         "rank_vc": result.rank_vc,
         "rank_vqc": result.rank_vqc,
-        "rank_w": result.rank_w,
+        "residual_rank": result.residual_rank,
         "energy_c": result.energy_c,
         "energy_qc": result.energy_qc,
         "r_trace": result.r_trace,
