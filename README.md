@@ -2,7 +2,7 @@
 
 This repository contains the source of the **Q1 Cosmochrony paper**
 *Fourier-Support Rigidity in Conjugate Weil Sectors: A No-Go Result for Rank-Based Quantum
-Signatures* (v2.0.0).
+Signatures* (v2.0).
 
 This is a **major correction** of the paper's original v1.1.2 (*From Admissibility to Quantum
 Structure: Phase Coherence and Correlations from Non-Injective Projection*). Independent review
