@@ -61,7 +61,7 @@ def index_involution(shell: list[tuple], gens: list[tuple], q: int):
     return iota_of
 
 
-def check_constant_modulus(x: np.ndarray, q: int, label: str) -> None:
+def check_constant_modulus(x: np.ndarray, q: int, label: str, tol: float = 1e-9) -> bool:
     """
     Each raw fingerprint vector psi_i(x) has entrywise modulus q^-1.5 (three
     factors of modulus q^-0.5 each, eq:weil-matrix-element / eq:fingerprint).
@@ -71,28 +71,39 @@ def check_constant_modulus(x: np.ndarray, q: int, label: str) -> None:
     which verifies |d_i|=1 for d_i = a_i^{-c}/a_{iota(i)}^{c} and so only
     needs the RATIO of moduli, not their absolute value. This function
     checks the more basic fact the ratio-based check assumes: |psi_i(x)| is
-    the SAME constant q^-1.5 for every entry x and every index i.
+    the SAME constant q^-1.5 for every entry x and every index i. Returns
+    True iff the deviation is within tolerance.
     """
     mags = np.abs(x)
     expected = q ** -1.5
     max_dev = np.max(np.abs(mags - expected))
+    ok = max_dev < tol
     print(f"  [{label}] max |entrywise magnitude - q^-1.5| = {max_dev:.2e} "
           f"(expect ~0: every entry of every fingerprint vector has modulus q^-1.5, "
-          f"hence a_i = psi_i/e_K has constant modulus q^-1)")
+          f"hence a_i = psi_i/e_K has constant modulus q^-1) [{'OK' if ok else 'FAIL'}]")
+    return ok
 
 
-def check_frame_relation(x_c: np.ndarray, x_qc: np.ndarray, iota_of: np.ndarray) -> None:
-    """x_qc[i] should equal d_i * x_c[iota_of[i]] for some |d_i| = 1, for every i."""
+def check_frame_relation(x_c: np.ndarray, x_qc: np.ndarray, iota_of: np.ndarray,
+                          tol: float = 1e-9) -> bool:
+    """
+    x_qc[i] should equal d_i * x_c[iota_of[i]] for a SINGLE scalar d_i with
+    |d_i| = 1, for every i -- not merely |ratio(i,x)| = 1 at each coordinate
+    x independently (a weaker, coordinate-wise-only check that a
+    coordinate-dependent phase injected into x_qc, unrelated to a genuine
+    constant d_i, would still pass: |d_i(x)| = 1 for each x does not imply
+    d_i(x) is the same complex number for every x). The within-row spread
+    check below is what actually tests single-scalar-ness; both this
+    function and its caller must gate on it, not merely print it -- an
+    earlier version of this script printed the deviations without ever
+    returning them, so a genuine failure would not have affected the
+    reported total (2026-08-07 review finding, fixed here). Returns True
+    iff both the modulus and the spread are within tolerance.
+    """
     lhs = x_qc
     rhs = x_c[iota_of]
-    # ratio component-wise where rhs is non-negligible; all ratios for a
-    # fixed i should be the SAME constant d_i (frame vectors are proportional
-    # to a pure Fourier mode, so any two non-zero-supported x-components give
-    # the same ratio).
     mask = np.abs(rhs) > 1e-12
     ratio = np.where(mask, lhs / np.where(mask, rhs, 1), 0)
-    # per-row: max deviation of |ratio| from 1, and std of the ratio across
-    # the row's non-zero entries (should be ~0, i.e. single constant d_i)
     max_modulus_dev = 0.0
     max_within_row_spread = 0.0
     for i in range(x_c.shape[0]):
@@ -101,9 +112,13 @@ def check_frame_relation(x_c: np.ndarray, x_qc: np.ndarray, iota_of: np.ndarray)
             continue
         max_modulus_dev = max(max_modulus_dev, np.max(np.abs(np.abs(row_ratios) - 1)))
         max_within_row_spread = max(max_within_row_spread, np.max(np.abs(row_ratios - row_ratios[0])))
+    ok = max_modulus_dev < tol and max_within_row_spread < tol
     print(f"  max | |d_i| - 1 | over all i = {max_modulus_dev:.2e} (expect ~0: d_i in U(1))")
     print(f"  max within-row spread of d_i estimate = {max_within_row_spread:.2e} "
-          f"(expect ~0: a single constant d_i per row, confirming x_qc[i] = d_i * x_c[iota(i)])")
+          f"(expect ~0: a SINGLE constant d_i per row, confirming x_qc[i] = d_i * x_c[iota(i)] "
+          f"-- this is the check that actually distinguishes a genuine constant scalar from "
+          f"coordinate-dependent phases that merely each have modulus 1) [{'OK' if ok else 'FAIL'}]")
+    return ok
 
 
 def normalised_bargmann(x: np.ndarray, i: int, j: int, k: int):
@@ -134,9 +149,12 @@ def main() -> None:
         x_qc = fingerprint_vectors_batch(shell_arr, np.array([qmc, 0, 0]), gens_arr, q)
 
         print(f"c={c}, q-c={qmc}:")
-        check_constant_modulus(x_c, q, "c")
-        check_constant_modulus(x_qc, q, "q-c")
-        check_frame_relation(x_c, x_qc, iota_of)
+        if not check_constant_modulus(x_c, q, "c"):
+            failures += 1
+        if not check_constant_modulus(x_qc, q, "q-c"):
+            failures += 1
+        if not check_frame_relation(x_c, x_qc, iota_of):
+            failures += 1
 
         # Colinear triple: fix u=0, s1=gens[0], vary (s2,s3) -> same K.
         i, j, k = 0, M, 2 * M
@@ -159,9 +177,49 @@ def main() -> None:
             failures += 1
         print()
 
+    negative_control_ok = check_frame_relation_rejects_coordinate_dependent_phase(q)
+    if not negative_control_ok:
+        failures += 1
+
     print(f"TOTAL failures: {failures}")
     if failures:
         raise SystemExit(1)
+
+
+def check_frame_relation_rejects_coordinate_dependent_phase(q: int) -> bool:
+    """
+    Negative control (2026-08-07 review finding): check_frame_relation must
+    REJECT a genuine violation of "a single constant d_i per row", not just
+    accept anything with per-coordinate modulus 1. Injects a
+    coordinate-dependent phase e^{i*2*pi*x/q} into one row of a synthetic
+    x_qc array that otherwise satisfies x_qc = d * x_c pointwise -- every
+    entry still has |ratio|=1, but the ratio is no longer a single constant
+    across the row, reproducing exactly the review's own adversarial test
+    (reported deviation ~1.997 there). check_frame_relation must return
+    False on this input; returns True here iff it correctly does.
+    """
+    rng = np.random.default_rng(0)
+    n, q_dim = 5, q
+    x_c = (rng.normal(size=(n, q_dim)) + 1j * rng.normal(size=(n, q_dim)))
+    x_c /= np.abs(x_c)  # unit-modulus entries, arbitrary phases (not pure Fourier lines)
+    iota_of = np.arange(n)  # identity involution for this synthetic check
+
+    # Genuine case: x_qc = single constant d_i * x_c[i], per row -- must PASS.
+    d = np.exp(1j * rng.uniform(0, 2 * np.pi, size=n))
+    x_qc_genuine = x_c * d[:, None]
+    genuine_passes = check_frame_relation(x_c, x_qc_genuine, iota_of)
+
+    # Attack: inject a coordinate-dependent phase into row 0 only -- must FAIL.
+    x_qc_attack = x_qc_genuine.copy()
+    coord_phase = np.exp(1j * 2 * np.pi * np.arange(q_dim) / q_dim)
+    x_qc_attack[0] *= coord_phase
+    attack_rejected = not check_frame_relation(x_c, x_qc_attack, iota_of)
+
+    ok = genuine_passes and attack_rejected
+    print(f"Negative control (coordinate-dependent-phase injection): "
+          f"genuine case passes = {genuine_passes}, attack correctly rejected = "
+          f"{attack_rejected} [{'OK' if ok else 'FAIL'}]")
+    return ok
 
 
 if __name__ == "__main__":

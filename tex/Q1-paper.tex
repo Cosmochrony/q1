@@ -190,13 +190,19 @@ A No-Go Result for Rank-Based Quantum Signatures}
     We work on the Cayley graph $\mathrm{Cay}(G_q, S_q)$, $G_q = \mathrm{Heis}_3(\mathbb{Z}/q\mathbb{Z})$
     for an odd prime~$q$, elements written $(a,b,\gamma)$ with group law
     $(a,b,\gamma)(a',b',\gamma') = (a+a',\, b+b',\, \gamma+\gamma'+ab') \bmod q$, and standard
-    symmetric generating set $S_q = \{X, X^{-1}, Y, Y^{-1}\}$, $X=(1,0,0)$, $Y=(0,1,0)$. Let
-    $\rho_c$, $c \in \mathbb{Z}/q\mathbb{Z}$, denote the Schr\"odinger representation of $G_q$ on
-    $\mathbb{C}^q$ (called the ``Weil representation'' in the O-series literature this construction
-    descends from, by the standard abuse of naming the Heisenberg-group representation after its
-    intertwining metaplectic completion). Every fingerprint vector below is obtained by applying
-    $\rho_{\mathbf c}$ to the fixed \emph{uniform state} $u_0(x) := q^{-1/2}$, never to a general
-    function; writing out that action explicitly,
+    symmetric generating set $S_q = \{X, X^{-1}, Y, Y^{-1}\}$, $X=(1,0,0)$, $Y=(0,1,0)$. For
+    $c \in (\mathbb{Z}/q\mathbb{Z})^\times$, let $\rho_c$ denote the Schr\"odinger representation of
+    $G_q$ on $\mathbb{C}^q$ with central character $\gamma \mapsto e^{2\pi i c\gamma/q}$ (called the
+    ``Weil representation'' in the O-series literature this construction descends from, by the
+    standard abuse of naming the Heisenberg-group representation after its intertwining metaplectic
+    completion); this is the genuine, irreducible case used by the Stone--von Neumann theorem. For
+    $c=0$, $\rho_0$ denotes instead the degenerate, reducible action with trivial central character
+    given by the same closed-form expression below --- not the Schr\"odinger representation, since
+    the central element then acts trivially. Both cases are needed: the special block used by the
+    numerical pipeline is $\mathbf c = (c,0,0)$, so two of its three factors use $\rho_0$.
+    The common closed form, valid for every $c \in \mathbb{Z}/q\mathbb{Z}$ including $c=0$, is
+    obtained by evaluating either representation on the fixed \emph{uniform state}
+    $u_0(x) := q^{-1/2}$:
     \begin{equation}
       \label{eq:weil-matrix-element}
       \bigl[\rho_c(a,b,\gamma)\, u_0\bigr](x)
@@ -261,9 +267,11 @@ A No-Go Result for Rank-Based Quantum Signatures}
           $v_0(c,b_1,b_2) := \rho_c(b_1,b_2,0)\, e_0 = \omega^{c\, b_2 b_1}\, e_{b_1}$, an explicit
           \emph{delta} (single-nonzero-entry) vector.
         \item \textbf{The pipeline's actual object}, $\widehat V_n^{\mathbf{c}}$, defined in
-          \eqref{eq:vhat-def}: every entry of every fingerprint vector has identical magnitude
-          $q^{-3/2}$ --- the signature of applying $\rho_{\mathbf c}$ to the \emph{uniform} state, not
-          to a delta basis vector.
+          \eqref{eq:vhat-def} as the pointwise product of three separate one-parameter actions
+          $\rho_{c_1}, \rho_{c_2}, \rho_{c_3}$ (not a single representation indexed by
+          $\mathbf c$; see~\eqref{eq:fingerprint}), each evaluated on the \emph{uniform} state:
+          every entry of every fingerprint vector has identical magnitude $q^{-3/2}$, the signature
+          of this uniform-state evaluation, not of a delta basis vector.
       \end{enumerate}
     \end{definition}
 
@@ -370,9 +378,11 @@ A No-Go Result for Rank-Based Quantum Signatures}
 
     \begin{remark}[The uniform probe is essential]
       \label{rem:uniform-probe-essential}
-      Step~1's reduction to a pure Fourier mode uses that every fingerprint vector arises from
-      applying $\rho_{\mathbf c}$ to the same fixed input (the implicit uniform state), so the
-      $x$-dependence is carried entirely by the matrix element~\eqref{eq:weil-matrix-element}. A
+      Step~1's reduction to a pure Fourier mode uses that every one-parameter factor
+      $\rho_{c_j}(u_j)$ making up a fingerprint vector (via~\eqref{eq:fingerprint}) is evaluated on
+      the same fixed input, the implicit uniform state, so the $x$-dependence of each factor, and
+      hence of their pointwise product, is carried entirely by the matrix
+      element~\eqref{eq:weil-matrix-element}. A
       delta-vector probe (object~(2) of Definition~\ref{def:three-objects}) would instead produce
       position-localised, not frequency-localised, orbit vectors, and Steps~1--5 would not apply to it
       without a separate argument.
@@ -450,10 +460,12 @@ A No-Go Result for Rank-Based Quantum Signatures}
     \end{corollary}
 
     \begin{proof}
-      By~\eqref{eq:weil-matrix-element}, conjugating $\rho_{\mathbf c}$ pointwise gives
-      $\rho_{-\mathbf c}$, so $x_i^{-\mathbf c} = \overline{x_i^{\mathbf c}} = \overline{a_i}\,
-      e_{-K_i}$ for every index~$i$ (same combinatorial index, both sectors evaluated at the same
-      $(u;s_1,s_2,s_3)$). By Theorem~\ref{thm:exact-rigidity}'s Step~5, $-K_i = K_{\iota(i)}$, so
+      By~\eqref{eq:weil-matrix-element}, conjugating each one-parameter factor
+      $\rho_{c_j}(u_j)u_0$ pointwise gives $\rho_{-c_j}(u_j)u_0$, so conjugating their product
+      (\eqref{eq:fingerprint}) pointwise gives $x_i^{-\mathbf c} = \overline{x_i^{\mathbf c}} =
+      \overline{a_i}\, e_{-K_i}$ for every index~$i$ (same combinatorial index, both sectors
+      evaluated at the same $(u;s_1,s_2,s_3)$). By Theorem~\ref{thm:exact-rigidity}'s Step~5,
+      $-K_i = K_{\iota(i)}$, so
       \begin{equation}
         x_i^{-\mathbf c} \;=\; \overline{a_i}\, e_{K_{\iota(i)}}
         \;=\; \frac{\overline{a_i}}{a_{\iota(i)}}\; \bigl(a_{\iota(i)}\, e_{K_{\iota(i)}}\bigr)
@@ -688,11 +700,11 @@ A No-Go Result for Rank-Based Quantum Signatures}
     \paragraph{Genuine multi-basis emergence.}
       Whether a single Weil/Heisenberg source can produce multiple, genuinely phase-distinguishable
       quantum-like frames is not resolved by this paper, and is not recoverable within this
-      construction: a direct check (cross-Gram and normalised Bargmann invariants between conjugate
-      sectors) found no richer phase geometry than the rigidity already proved, for the same
-      structural reason (each vector reduces to a single-phase Fourier line). A future attempt would
-      need non-conjugate character blocks, BFS-depth holonomy, or a frame construction not reducible
-      to a single Fourier mode.
+      construction: Corollary~\ref{cor:frame-nogo} already shows no richer phase geometry survives
+      than the rigidity proved above, for the structural reason that each vector reduces to a
+      single-phase Fourier line (Example~\ref{ex:bargmann}). A future attempt would need
+      non-conjugate character blocks, BFS-depth holonomy, or a frame construction not reducible to a
+      single Fourier mode.
 
   \section{Comparison with standard quantum mechanics}
   \label{sec:comparison-qm}
