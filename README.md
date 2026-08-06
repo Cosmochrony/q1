@@ -59,6 +59,26 @@ checks), `frame_invariance_check.py` (frame-orbit / Bargmann-invariant verificat
 `separator.py` (numeric SVD cross-check), `weil_pipeline_compat.py` (reconstructed pre-correction
 pipeline, used only as the negative control).
 
+## Reproducing the Numerical Results
+
+```bash
+cd code
+pip install -r requirements.txt
+
+# Full regression suite (all checks below, plus shell/coherence sanity checks
+# and the coordinate-dependent-phase negative control)
+python3 test_regression.py
+
+# The multi-prime exact sweep reported in the paper (1,548 checks, 0 failures)
+python3 exact_fourier_support.py --primes 13,17,29,37,53,61
+
+# Frame-orbit / Bargmann-invariant check on its own (q=29)
+python3 frame_invariance_check.py
+```
+
+All checks use fixed, deterministic seeds where randomness is involved (e.g.
+`np.random.default_rng(0)` in the negative control) and report exit code 0 on success.
+
 ## Links
 
 - 🔗 DOI: [10.5281/zenodo.19561060](https://doi.org/10.5281/zenodo.19561060) (concept DOI; this
