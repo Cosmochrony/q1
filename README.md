@@ -2,13 +2,7 @@
 
 This repository contains the source of the **Q1 Cosmochrony paper**
 *Fourier-Support Rigidity in Conjugate Weil Sectors: A No-Go Result for Rank-Based Quantum
-Signatures* (v2.0).
-
-This is a **major correction** of the paper's original v1.1.2 (*From Admissibility to Quantum
-Structure: Phase Coherence and Correlations from Non-Injective Projection*). Independent review
-found v1.1.2's central theorem's published proof unsound, and separately found defects in its
-Born-rule proof. This revision withdraws that programme and proves a narrower, unconditional
-result instead.
+Signatures*.
 
 ## Core Result
 
@@ -32,10 +26,8 @@ failures, plus a negative control confirming the criterion correctly detects fai
 deliberately truncated shell.
 
 **What this paper does not claim**: it does not derive Hilbert-space structure, the singlet
-correlator, the Tsirelson bound, the Born rule, or non-locality. The singlet correlator and
-Tsirelson bound survive only as a standard, explicitly conditional textbook remark; the Born rule
-is withdrawn outright (independent proof defects, not merely a broken dependency chain). See the
-paper's Introduction and Remark on changes from v1.1.2 for the full list.
+correlator, the Tsirelson bound, the Born rule, or non-locality. See the paper's Introduction for
+the full list.
 
 ## Keywords
 
@@ -81,8 +73,7 @@ All checks use fixed, deterministic seeds where randomness is involved (e.g.
 
 ## Links
 
-- 🔗 DOI: [10.5281/zenodo.19561060](https://doi.org/10.5281/zenodo.19561060) (concept DOI; this
-  revision not yet deposited as a new version)
+- 🔗 DOI: [10.5281/zenodo.19561060](https://doi.org/10.5281/zenodo.19561060) (concept DOI)
 - 🌐 Website: https://cosmochrony.org/science/quantum-structure/q1/
 
 ## Citation

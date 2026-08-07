@@ -1,7 +1,5 @@
 % Fourier-Support Rigidity in Conjugate Weil Sectors
 % A No-Go Result for Rank-Based Quantum Signatures
-% v2.0: corrects and narrows the earlier "Phase Coherence as an Admissibility
-% Constraint" (v1.1.2); see Remark rem:v2-changes for the full list of changes.
 
 \documentclass[11pt,a4paper]{article}
 
@@ -61,14 +59,12 @@ A No-Go Result for Rank-Based Quantum Signatures}
     principal angles, but any quantity invariant under independent rephasing and reindexing of the
     frame --- including normalised Bargmann invariants, proved trivial by an explicit frame-orbit
     argument. A bibliography search confirms $\rho_{q-c}=\overline{\rho_c}$ is standard; no matching
-    result was found for the subspace-equality identity or its no-go corollaries. This paper
-    corrects an earlier version (v1.1.2): independent review found its central-theorem proof
-    unsound and its separate Born-rule proof independently defective; both are withdrawn, and the
-    singlet correlator and Tsirelson bound survive only as a standard, conditional remark. What
-    remains is the rigidity result above and its precisely scoped no-go corollaries. Read as a
-    methodological instance for the wider programme (interpretive, not a further result): a
-    numerical near-zero-residual observation can be forced by a construction's own structural
-    degeneracy rather than signal an intended physical mechanism.
+    result was found for the subspace-equality identity or its no-go corollaries. This is a narrow,
+    structural result: it says nothing about phase coherence, the singlet correlator, the Tsirelson
+    bound, or the Born rule under admissibility. Read as a methodological instance for the wider
+    programme (interpretive, not a further result): a numerical near-zero-residual observation can be
+    forced by a construction's own structural degeneracy rather than signal an intended physical
+    mechanism.
   \end{abstract}
 
   \paragraph{Keywords.}
@@ -84,30 +80,15 @@ A No-Go Result for Rank-Based Quantum Signatures}
   \label{sec:introduction}
 
   This paper proves a rigidity theorem in finite representation theory and draws its precise,
-  narrow consequence for a class of diagnostics one might otherwise have hoped to use to distinguish
-  conjugate sectors of the finite Weil representation. It does not derive quantum-mechanical
-  structure, and makes no claim about physical admissibility or projection dynamics.
-
-  \subsection*{Origin and status of this paper}
-
-    This paper originated as an attempt, within the Cosmochrony non-injective-projection
-    framework~\cite{Cosmochrony} and its spectral admissibility sub-programme (the O-series), to
-    derive quantum-mechanical phase coherence, the singlet correlator, the Tsirelson bound, and the
-    Born rule from a projective admissibility constraint (v1.1.2, Zenodo
-    \texttt{10.5281/zenodo.19561060}). Independent review of that version found its central
-    theorem's published proof unsound: the coherence-regime-dependent lemma it relied on is
-    contradicted once a Breadth-First-Search truncation bug in the numerical pipeline is fixed, and
-    the theorem's admissibility argument separately relied on an external fibre-structure result
-    (O18) subsequently found invalid. Independent review of the Born-rule derivation found further,
-    independent defects in its own proof. Full detail is recorded in
-    Remark~\ref{rem:v2-changes} and Section~\ref{subsec:born-rule}.
-
-    What survives, and is the actual content of this paper, is narrower and unconditional rather than
-    coherence-dependent: a representation-theoretic rigidity theorem about the object the numerical
-    pipeline actually computes (Definition~\ref{def:three-objects}), together with a precisely
-    characterised no-go corollary. This paper does not claim to close any open problem of the
-    Cosmochrony programme; it documents, precisely, what one specific construction in that programme
-    can and cannot show.
+  narrow consequence for a class of diagnostics one might otherwise have hoped to use, within the
+  Cosmochrony non-injective-projection framework~\cite{Cosmochrony} and its spectral admissibility
+  sub-programme (the O-series), to distinguish conjugate sectors of the finite Weil representation.
+  It does not derive quantum-mechanical structure, and makes no claim about physical admissibility
+  or projection dynamics. What survives is narrower and unconditional: a representation-theoretic
+  rigidity theorem about the object a specific numerical pipeline actually computes
+  (Definition~\ref{def:three-objects}), together with a precisely characterised no-go corollary.
+  This paper does not claim to close any open problem of the Cosmochrony programme; it documents,
+  precisely, what one specific construction in that programme can and cannot show.
 
   \subsection*{Main result}
 
@@ -121,20 +102,20 @@ A No-Go Result for Rank-Based Quantum Signatures}
 
     \textbf{No-go corollaries} (Section~\ref{subsec:no-go}). No diagnostic built from Fourier
     support, subspace rank, projectors, dimensions, or principal angles can separate the sectors
-    (Corollary~\ref{cor:support-rank-nogo}). More precisely, and correcting an earlier, over-stated
-    formulation of this corollary: no diagnostic invariant under independent rephasing and
-    reindexing of the underlying frame can either (Corollary~\ref{cor:frame-nogo}) --- a class that
-    includes normalised Bargmann-type invariants but explicitly excludes raw, phase-gauge-dependent
-    quantities such as an unnormalised Gram matrix entry.
+    (Corollary~\ref{cor:support-rank-nogo}). More precisely: no diagnostic invariant under
+    independent rephasing and reindexing of the underlying frame can either
+    (Corollary~\ref{cor:frame-nogo}) --- a class that includes normalised Bargmann-type invariants
+    but explicitly excludes raw, phase-gauge-dependent quantities such as an unnormalised Gram
+    matrix entry.
 
   \subsection*{What this paper does not claim}
 
     This paper does not derive Hilbert-space structure, superposition, measurement outcomes, the
-    singlet correlator, the Tsirelson bound, the Born rule, or non-locality (contrast
-    Section~\ref{sec:comparison-qm}). It does not claim that the abstract object $V_n^{(c)}$ of
-    v1.1.2's original definition, or the delta-vector probe of O17, coincide with the pipeline object
-    $\widehat V_n^{\mathbf c}$ this paper's theorem is actually about --- that identification is left
-    open (Remark~\ref{rem:open-bridge}). It does not claim that a single Weil/Heisenberg source
+    singlet correlator, the Tsirelson bound, the Born rule, or non-locality. It does not claim that
+    the abstract object $V_n^{(c)}$ of Definition~\ref{def:three-objects}, object~(1), or the
+    delta-vector probe of O17, coincide with the pipeline object $\widehat V_n^{\mathbf c}$ this
+    paper's theorem is actually about --- that identification is left open
+    (Remark~\ref{rem:open-bridge}). It does not claim that a single Weil/Heisenberg source
     produces multiple, genuinely phase-distinguishable quantum-like frames; a direct check found no
     such structure recoverable within this construction (see the Conclusion's open directions). It
     does not claim priority beyond the literature actually surveyed (see the Conclusion's Related
@@ -147,12 +128,8 @@ A No-Go Result for Rank-Based Quantum Signatures}
     (Section~\ref{subsec:exact-theorem}), the no-go corollaries
     (Section~\ref{subsec:no-go}), independent numerical verification
     (Section~\ref{subsec:numerical-verification}), and the scope of the result
-    (Section~\ref{subsec:q1-consequences}). Section~\ref{subsec:tsirelson} records the singlet
-    correlator and Tsirelson bound as a standard conditional remark, not a result of this paper;
-    Section~\ref{subsec:born-rule} explains why the Born rule is withdrawn rather than weakened.
-    Section~\ref{sec:comparison-qm} gives a modest comparison with standard quantum mechanics, and
-    Section~\ref{sec:falsifiability} separates the exact proof from its numerical verification and
-    negative control.
+    (Section~\ref{subsec:q1-consequences}). Section~\ref{sec:falsifiability} separates the exact
+    proof from its numerical verification and negative control.
 
 % -----------------------------------------------------------------------
 % BODY (inlined from Q1-theorem.tex)
@@ -178,11 +155,12 @@ A No-Go Result for Rank-Based Quantum Signatures}
 
   \paragraph{What this section does not claim.}
     The identity proved here concerns a precisely specified pipeline object
-    (Definition~\ref{def:three-objects}, object~(3)), not the abstractly-defined $V_n^{(c)}$ of the
-    v1.1.2 theorem this revision withdraws, nor O17's own probe vector. The identification between
-    these objects is an open question, not assumed anywhere below (Remark~\ref{rem:open-bridge}).
-    This section makes no claim about physical admissibility, projection dynamics, or
-    quantum-mechanical structure (see Remark~\ref{rem:not-admissibility-not-cancellation}).
+    (Definition~\ref{def:three-objects}, object~(3)), not the abstractly-defined $V_n^{(c)}$ of
+    Definition~\ref{def:three-objects}, object~(1), nor O17's own probe vector, object~(2). The
+    identification between these objects is an open question, not assumed anywhere below
+    (Remark~\ref{rem:open-bridge}). This section makes no claim about physical admissibility,
+    projection dynamics, or quantum-mechanical structure (see
+    Remark~\ref{rem:not-admissibility-not-cancellation}).
 
   \subsection{Setup: three distinct objects}
     \label{subsec:q1-setup}
@@ -260,9 +238,9 @@ A No-Go Result for Rank-Based Quantum Signatures}
       \label{def:three-objects}
       Three objects, notationally and logically distinct, must not be conflated below.
       \begin{enumerate}[(1)]
-        \item \textbf{Q1's original abstract object} (v1.1.2, notation unchanged):
-          $V_n^{(c)} := \mathrm{span}\{\rho_c(g)\, v_0 : g \in B_n\}$ for an \emph{unspecified} probe
-          $v_0$ and cumulative ball $B_n$.
+        \item \textbf{The abstract admissibility object}:
+          $V_n^{(c)} := \mathrm{span}\{\rho_c(g)\, v_0 : g \in B_n\}$ for an \emph{unspecified}
+          probe $v_0$ and cumulative ball $B_n$.
         \item \textbf{O17's own probe}~\cite{Beau2026a21}:
           $v_0(c,b_1,b_2) := \rho_c(b_1,b_2,0)\, e_0 = \omega^{c\, b_2 b_1}\, e_{b_1}$, an explicit
           \emph{delta} (single-nonzero-entry) vector.
@@ -297,8 +275,9 @@ A No-Go Result for Rank-Based Quantum Signatures}
           \sum_{g \in S_n} e^{2\pi i c \gamma_g / q}
         \right|.
       \end{equation}
-      This quantity is retained as a definition only; unlike in v1.1.2, no result below is
-      conditioned on its value, since Theorem~\ref{thm:exact-rigidity} holds unconditionally.
+      This quantity is retained as a definition only because it appears in
+      Figure~\ref{fig:separator}; no result below is conditioned on its value, since
+      Theorem~\ref{thm:exact-rigidity} holds unconditionally.
     \end{definition}
 
   \subsection{Exact theorem}
@@ -536,27 +515,24 @@ A No-Go Result for Rank-Based Quantum Signatures}
           $\dim\,\mathrm{Res}_n(c) = \dim\bigl[(I-P_{q-c})\widehat V_n^{(c)}\bigr]$
           (\eqref{eq:proj-residual} --- not the set intersection $\widehat V_n^{(c)} \cap
           (\widehat V_n^{(q-c)})^\perp$) vs.\ BFS depth~$n$, for $q=29$ and four conjugate pairs
-          $(1,28)$, $(3,26)$, $(7,22)$, $(11,18)$, on the corrected (complete-shells-only) pipeline.
-          The four coherence curves are genuinely distinct at every depth --- unlike the v1.1.2
-          figure, which reported them as coincident due to a mid-shell BFS truncation bug, since
-          corrected. The residual dimension is exactly zero at every complete shell, including the
-          deeply incoherent depths, and including the final shell (previously the pipeline's only
-          reported non-zero residual, now understood as the artefact described in part~(c) below).}
+          $(1,28)$, $(3,26)$, $(7,22)$, $(11,18)$, on the complete-shells-only pipeline. The four
+          coherence curves are genuinely distinct at every depth. The residual dimension is exactly
+          zero at every complete shell, including the deeply incoherent depths and the final shell;
+          see part~(c) below for the truncated-shell negative control showing this identity is not
+          vacuous.}
         \label{fig:separator}
       \end{figure}
 
     \paragraph{(c) Negative control: the truncation artefact.}
-      The v1.1.2 pipeline's BFS routine stopped mid-shell once a node-count quota was reached,
-      silently keeping a partial final shell. Such a shell need not satisfy
-      Lemma~\ref{lem:shell-inversion} and so is not covered by Theorem~\ref{thm:exact-rigidity}.
-      Reconstructing that pre-correction behaviour (\texttt{code/\allowbreak weil\_pipeline\_compat.py}) and
-      re-running the exact/numeric comparison confirms: the exact criterion and $\dim\mathrm{Res}_n(c)$
-      agree throughout, \emph{including} at the truncated shell, where both correctly register
+      A BFS routine that stops mid-shell once a node-count quota is reached, silently keeping a
+      partial final shell, produces a shell that need not satisfy Lemma~\ref{lem:shell-inversion}
+      and so falls outside Theorem~\ref{thm:exact-rigidity}'s scope. Reconstructing such a
+      quota-truncated shell (\texttt{code/\allowbreak weil\_pipeline\_compat.py}) and re-running the
+      exact/numeric comparison confirms: the exact criterion and $\dim\mathrm{Res}_n(c)$ agree
+      throughout, \emph{including} at the truncated shell, where both correctly register
       $F_{\mathbf c} \neq F_{-\mathbf c}$ and $\dim\mathrm{Res}_n(c) > 0$ (e.g.\ $q=29$, depth~$15$).
-      This is the exact mechanism behind the single non-zero data point in the v1.1.2 figure: a
-      BFS-quota truncation breaking inversion symmetry, not a floating-point saturation effect as the
-      v1.1.2 text claimed, and not a boundary of validity of the theorem, which concerns complete shells
-      only by hypothesis.
+      This is a genuine negative control, not a vacuous check: the truncation breaks the
+      inversion-symmetry hypothesis, and the criterion correctly detects the resulting asymmetry.
 
   \subsection{Scope of this result}
   \label{subsec:q1-consequences}
@@ -571,75 +547,6 @@ A No-Go Result for Rank-Based Quantum Signatures}
     a shared observable event. Coherent non-detection of a configuration, if any such notion applies
     elsewhere in the programme, may result from either mechanism; the two should not be conflated.
     This paper establishes only the representation-theoretic rigidity above.
-  \end{remark}
-
-  \begin{remark}[Changes from v1.1.2]
-    \label{rem:v2-changes}
-    This is v2.0, a major revision. Independent review of v1.1.2 (Zenodo
-    \texttt{10.5281/zenodo.19561060}) found its central theorem's published proof unsound: the
-    coherence-regime-dependent lemma underlying it is contradicted by a corrected BFS pipeline (part
-    (c) above), and the theorem's own admissibility argument relied on an external fibre-structure
-    result subsequently found invalid. This revision withdraws that theorem, the associated
-    Gram--Schmidt rank corollary (dimensionally impossible as stated: both summands already live in
-    $\mathbb{C}^q$, so no rank overflow beyond~$q$ can occur), and the singlet-correlator, Tsirelson,
-    and Born-rule derivations that depended on it or on since-compromised external results
-    (Section~\ref{subsec:tsirelson} below). In their place, this revision proves an unconditional
-    structural identity (Theorem~\ref{thm:exact-rigidity}) about a precisely specified object
-    (Definition~\ref{def:three-objects}), narrower in scope but exact rather than
-    coherence-conditional, together with a precisely characterised no-go corollary
-    (Corollaries~\ref{cor:support-rank-nogo}, \ref{cor:frame-nogo}). This paper no longer claims to
-    derive quantum-mechanical structure; see Section~\ref{sec:comparison-qm}.
-  \end{remark}
-
-  \subsection{Singlet correlator and Tsirelson bound: a standard conditional remark}
-  \label{subsec:tsirelson}
-
-  Neither the singlet correlator nor the Tsirelson bound is a result of this paper. Both survive
-  v1.1.2 only as a well-known conditional derivation, stated here for completeness and explicitly
-  demoted from ``theorem'' to ``remark'': its hypotheses already encode most of the quantum structure
-  being sought, and are established by neither this paper (bilinearity previously cited the withdrawn
-  Theorem~\ref{thm:exact-rigidity}'s v1.1.2 predecessor for linearity of fibre evaluation) nor O23
-  (isotropy is imported from another paper, not derived there --- see the discussion accompanying
-  Definition~\ref{def:three-objects} and the withdrawal notice, Remark~\ref{rem:v2-changes}).
-
-  \begin{remark}[Standard conditional derivation]
-    \label{rem:singlet-tsirelson-standard}
-    Suppose (H1) admissible outcomes are evaluated by a fibre pairing $\langle\cdot\rangle_{F}$
-    bilinear in two observables $A(\hat a) = \hat\sigma\cdot\hat a$, $B(\hat b)=\hat\sigma\cdot\hat b$
-    built from the real Lie algebra identification $\mathrm{Im}\,\mathbb{H} \cong \mathfrak{su}(2)$
-    (standard mathematics, independent of O23 --- see e.g.~\cite{Hurwitz1898} and any standard
-    reference on quaternions and $\mathrm{SU}(2)$); (H2) the pairing is isotropic, i.e.\ invariant
-    under simultaneous $\mathrm{SO}(3)$ rotation of $\hat a,\hat b$; (H3)
-    $E(\hat a,\hat a) := \langle A(\hat a) B(\hat a)\rangle_F = -1$. None of (H1)--(H3) is derived by
-    this paper or by O23; they are stated here as named hypotheses, not established inputs. Under
-    them, bilinearity plus isotropy force $E(\hat a,\hat b) = f(\hat a\cdot\hat b)$ for linear~$f$
-    (Schur's lemma / the classification of bilinear invariants of $\mathrm{SO}(3)$ on $\mathbb{R}^3$),
-    and (H3) fixes $f(x)=-x$, giving the textbook singlet correlator
-    $E(\hat a,\hat b) = -\hat a \cdot \hat b$. The Tsirelson bound
-    $|S_{\mathrm{CHSH}}| \leq 2\sqrt 2$ then follows immediately by Cauchy--Schwarz, exactly as in the
-    standard derivation~\cite{Tsirelson1980}: writing
-    $S = -(\hat a\cdot(\hat b+\hat b') + \hat a'\cdot(\hat b -\hat b'))$ and using
-    $|\hat b+\hat b'|^2+|\hat b-\hat b'|^2=4$ gives $|S|\le 2\sqrt2$, with equality at the standard
-    CHSH-optimal configuration. This is textbook algebra once (H1)--(H3) are granted; nothing about
-    it is a contribution of the present paper.
-  \end{remark}
-
-  \subsection{Born rule: open}
-  \label{subsec:born-rule}
-
-  \begin{remark}[Born rule not derived]
-    \label{rem:born-status}
-    v1.1.2 claimed a derivation of the Born rule (Theorem ``Emergence of Born weights''). Independent
-    review found the proof unsound independently of its dependence on the withdrawn main theorem: it
-    identified the mean-value vector $\vec m_\psi$ with the quantum expectation
-    $\langle\psi|\vec\sigma|\psi\rangle$, importing the very rule being derived; it then equated the
-    full Bloch vector $\vec m_\psi$ with its own projection along the single, arbitrarily chosen
-    measurement axis $\hat a$; and its uniqueness step computed the two-point correlator from a
-    \emph{factorised} joint probability $P'(a|\hat a)P'(b|\hat b)$, which cannot reproduce a
-    non-factorisable (entangled) correlator's uniqueness without already assuming the classical
-    limit it is meant to exclude. This revision withdraws that argument entirely rather than
-    retaining a weakened, conditional version of it. The Born rule is not derived by this paper and
-    remains, as far as this programme is concerned, fully open.
   \end{remark}
 
 % -----------------------------------------------------------------------
@@ -662,13 +569,10 @@ A No-Go Result for Rank-Based Quantum Signatures}
   six primes, zero failures; a negative control confirming the criterion correctly detects failure on
   a deliberately truncated shell) support the result.
 
-  This paper does not derive quantum-mechanical structure. v1.1.2 claimed a chain from admissibility
-  to phase coherence to the singlet correlator, the Tsirelson bound, and the Born rule; independent
-  review found the central theorem's proof unsound and, separately, defects in the Born-rule proof
-  independent of that chain (Remark~\ref{rem:v2-changes}, Section~\ref{subsec:born-rule}). This
-  revision withdraws that programme. The singlet correlator and Tsirelson bound survive only as a
-  standard, explicitly conditional textbook remark (Section~\ref{subsec:tsirelson}); the Born rule is
-  withdrawn outright and remains fully open.
+  This paper does not derive quantum-mechanical structure: it establishes no result about phase
+  coherence, the singlet correlator, the Tsirelson bound, or the Born rule under admissibility. The
+  rigidity theorem above is representation-theoretic and unconditional; it says nothing about which
+  projective transitions are physically realised.
 
   \subsection*{Related work}
 
@@ -688,9 +592,10 @@ A No-Go Result for Rank-Based Quantum Signatures}
 
     \paragraph{The three-object bridge.}
       Whether the pipeline's uniform-probe object $\widehat V_n^{\mathbf c}$
-      (Definition~\ref{def:three-objects}, object~(3)) coincides with Q1's original abstract
-      $V_n^{(c)}$ (object~(1)) under some choice of probe, or with the span generated by O17's own
-      delta probe (object~(2)), remains open (Remark~\ref{rem:open-bridge}).
+      (Definition~\ref{def:three-objects}, object~(3)) coincides with the abstract admissibility
+      object $V_n^{(c)}$ of Definition~\ref{def:three-objects}, object~(1), under some choice of
+      probe, or with the span generated by O17's own delta probe (object~(2)), remains open
+      (Remark~\ref{rem:open-bridge}).
 
     \paragraph{Precise scope of the frame no-go.}
       Corollary~\ref{cor:frame-nogo} is proved for the exact pure-Fourier-line frame structure of
@@ -714,43 +619,13 @@ A No-Go Result for Rank-Based Quantum Signatures}
     one --- its significance is broader than its statement: it shows concretely how a structural
     degeneracy internal to one specific construction (orbit vectors collapsing to single-frequency
     Fourier lines under a shell-symmetric BFS scheme) can produce a numerical near-zero-residual
-    observation that looks like a physical signature without being one. v1.1.2 read that zero as
-    evidence that admissibility preserves phase coherence; this revision shows the same zero is
-    forced by representation theory alone, independent of any admissibility notion. This is offered
-    as a cautionary instance, not a general claim: it does not show that other diagnostics used
-    elsewhere in the O-series or Q-series programme suffer an analogous degeneracy, only that this
-    one did, and that independent review exposed it after v1.1.2 was published, prompting the
-    present correction. The genuine open question
-    this paper leaves --- whether a single Weil/Heisenberg source can produce multiple,
-    phase-distinguishable quantum-like frames by some other construction --- remains exactly as open
-    after this paper as before it; nothing proved here decides it either way.
-
-  \section{Comparison with standard quantum mechanics}
-  \label{sec:comparison-qm}
-
-  Unlike v1.1.2, this paper does not derive Hilbert-space structure, superposition, measurement
-  outcomes, the correlator law, the Tsirelson bound, the Born rule, or non-locality; those claims are
-  withdrawn (Remark~\ref{rem:v2-changes}). The comparison below is correspondingly modest.
-
-  \paragraph{A cautionary result for the programme's own diagnostic toolkit.}
-    Support, rank, and Gram-derived quantities are natural, representation-theoretic diagnostics, and
-    one might plausibly have expected some such diagnostic to separate conjugate Weil sectors --- it
-    is what v1.1.2 attempted to construct.
-    Theorem~\ref{thm:exact-rigidity} and its corollaries show this expectation fails for a structural
-    reason, not a numerical coincidence: the pure-Fourier-line reduction that proves the identity
-    simultaneously forecloses the richer phase geometry that would be needed to separate the sectors
-    by any rephasing/permutation-invariant frame diagnostic. This is worth recording as a cautionary
-    example for any future use of support/rank/Gram-based diagnostics elsewhere in the spectral
-    admissibility programme.
-
-  \paragraph{The singlet correlator and Tsirelson bound are standard, not derived here.}
-    Section~\ref{subsec:tsirelson} records the textbook derivation of $E(\hat a,\hat b)=-\hat a\cdot
-    \hat b$ and the Tsirelson bound from bilinearity, isotropy, and normalisation, explicitly as named,
-    unproved hypotheses rather than as a result of this framework.
-
-  This section makes no further use of Table references or of the withdrawn theorems; see
-  Remark~\ref{rem:v2-changes} for the full list of what v1.1.2 claimed and why each claim is
-  withdrawn in this revision.
+    observation that looks like a physical signature without being one, forced by representation
+    theory alone, independent of any admissibility notion. This is offered as a cautionary instance,
+    not a general claim: it does not show that other diagnostics used elsewhere in the O-series or
+    Q-series programme suffer an analogous degeneracy, only that this one does. The genuine open
+    question this paper leaves --- whether a single Weil/Heisenberg source can produce multiple,
+    phase-distinguishable quantum-like frames by some other construction --- remains open; nothing
+    proved here decides it either way.
 
   \section{Exact scope and reproducible checks}
   \label{sec:falsifiability}
@@ -764,8 +639,8 @@ A No-Go Result for Rank-Based Quantum Signatures}
     BFS shell $S_n$ is complete in the sense of Definition~\ref{def:complete-shell} (inversion-
     symmetric, Lemma~\ref{lem:shell-inversion}); and the vectors in question are the pipeline's
     uniform-probe fingerprint construction, object~(3) of Definition~\ref{def:three-objects} ---
-    not Q1's abstract $V_n^{(c)}$ or O17's delta probe. No coherence, saturation, or admissibility
-    hypothesis is used anywhere in the proof.
+    not the abstract admissibility object $V_n^{(c)}$ or O17's delta probe. No coherence,
+    saturation, or admissibility hypothesis is used anywhere in the proof.
 
   \paragraph{Numerical verification.}
     Independent of the proof: $1{,}548$ exact (integer-arithmetic) checks across
@@ -774,12 +649,10 @@ A No-Go Result for Rank-Based Quantum Signatures}
     throughout (Section~\ref{subsec:numerical-verification}, parts (a)--(b)).
 
   \paragraph{Negative control.}
-    The exact criterion is not vacuously true: reconstructing the pre-correction, quota-truncated
-    BFS (which breaks Lemma~\ref{lem:shell-inversion}'s hypothesis) produces shells on which both the
-    exact criterion and the independent numeric computation correctly and simultaneously register
-    failure (Section~\ref{subsec:numerical-verification}, part~(c)). This is also the exact mechanism
-    behind v1.1.2's one reported non-zero residual, previously misattributed to floating-point
-    saturation.
+    The exact criterion is not vacuously true: reconstructing a quota-truncated BFS shell (which
+    breaks Lemma~\ref{lem:shell-inversion}'s hypothesis) produces shells on which both the exact
+    criterion and the independent numeric computation correctly and simultaneously register failure
+    (Section~\ref{subsec:numerical-verification}, part~(c)).
 
   \begin{sloppypar}
   \paragraph{Open numerical extension.}
